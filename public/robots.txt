@@ -1,0 +1,11 @@
+# robots.txt for Megh Dave Portfolio
+# Allows all search engines to crawl the entire site
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://huggingface.co/spaces/MEGH06/portfolio/sitemap.xml
+
+# Crawl-delay (optional, helps prevent overload)
+Crawl-delay: 1
