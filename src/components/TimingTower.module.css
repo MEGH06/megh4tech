@@ -7,8 +7,6 @@
 }
 
 .head {
-  border-bottom: var(--b-heavy) solid var(--c-rosso);
-  border-image: var(--rule-heavy) 1;
   padding-bottom: var(--s-3);
   margin-bottom: var(--s-6);
 }
@@ -19,11 +17,16 @@
 }
 
 .rows {
-  border-top: var(--b-hair) solid var(--c-line);
-  border-image: var(--rule-hair) 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
 }
 
 .rows > li {
+  background: var(--c-surface);
+  border: var(--b-hair) solid var(--c-line);
+  clip-path: polygon(0 0, calc(100% - var(--chamfer)) 0, 100% var(--chamfer), 100% 100%, var(--chamfer) 100%, 0 calc(100% - var(--chamfer)));
+  padding: var(--s-5);
   /* One column. The 64px track held the P1/P2 position marker, which was F1
      costume rather than information — the list is already in order, so the
      number restated the row's own position. Removing the element without
@@ -33,8 +36,6 @@
   grid-template-columns: 1fr;
   padding-block: var(--s-5);
   align-items: start;
-  border-bottom: var(--b-hair) solid var(--c-line);
-  border-image: var(--rule-hair) 1;
   transition: background var(--dur) var(--ease-soft);
 }
 
@@ -51,7 +52,7 @@
    state a reader cannot get from the words: a win in the results list, and
    the card the command bar just jumped to. */
 .front .name {
-  color: var(--c-rosso-text);
+  color: var(--c-white);
 }
 
 .body {
@@ -79,7 +80,7 @@
   font-size: var(--t-xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--c-rosso-text);
+  color: var(--c-grey);
 }
 
 /* --- the result ----------------------------------------------------------
@@ -139,7 +140,7 @@
   font-size: 0.5625rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--c-rosso-text);
+  color: var(--c-grey);
   padding-top: 0.3em;
 }
 

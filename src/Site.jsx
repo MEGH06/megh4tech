@@ -1,6 +1,7 @@
 import { lazy, Suspense, useCallback, useRef, useState } from 'react';
 import CarWindow from './components/CarWindow';
 import StartLights from './components/StartLights';
+import SectorMark from './components/SectorMark';
 import Development from './components/Development';
 import Driver from './components/Driver';
 import GridSlot from './components/GridSlot';
@@ -98,19 +99,27 @@ export default function Site() {
         <CarWindow id="plan" height="tall" align="left" />
 
         <main>
+          <SectorMark n={1} label="About" />
           <Driver />
+          <SectorMark n={2} label="Education" />
           <Ladder />
           <CarWindow id="aero" height="tall" align="right" />
 
+          <SectorMark n={3} label="Achievements" />
           <RaceRecord />
+          <SectorMark n={4} label="Experience" />
           <Paddock />
           <CarWindow id="chassis" height="tall" align="left" />
 
+          <SectorMark n={5} label="Projects" />
           <TimingTower />
+          <SectorMark n={6} label="Research" />
           <Development />
           <CarWindow id="drive" height="tall" align="right" />
 
+          <SectorMark n={7} label="Skills" />
           <Skills />
+          <SectorMark n={8} label="Contact" />
           <PitBoard />
         </main>
       </div>

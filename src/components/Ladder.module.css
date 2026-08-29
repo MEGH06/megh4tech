@@ -16,7 +16,7 @@
   padding-bottom: var(--s-3);
   margin-bottom: var(--s-6);
   border-bottom: var(--b-heavy) solid transparent;
-  border-image: var(--rule-heavy) 1;
+  border-image: var(--rule-hair) 1;
 }
 
 .title {

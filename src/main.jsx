@@ -13,10 +13,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-// Rajdhani for display, Barlow for prose, JetBrains Mono for data. Latin only.
-import '@fontsource/rajdhani/latin-500.css';
-import '@fontsource/rajdhani/latin-600.css';
-import '@fontsource/rajdhani/latin-700.css';
+// Archivo Variable for display — one file carrying both the weight and width
+// axes, so titles can be set wide and heavy without a second download. The
+// unicode-range split means only the latin subset is actually fetched.
+import '@fontsource-variable/archivo/wdth.css';
 // IBM Plex Sans for running text.
 //
 // Inter is the safe, invisible choice — which is exactly the complaint. It has

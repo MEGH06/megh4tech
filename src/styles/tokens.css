@@ -13,6 +13,13 @@
 
   --c-black: #050505;   /* page ground */
   --c-panel: #101010;   /* raised block on black */
+
+  /* Surfaces. Nothing on this site sat on a filled panel — every card, row and
+     field floated on the ground plane, which is most of why it read as
+     unfinished rather than as an instrument. */
+  --c-surface: #0c0d0f;
+  --c-surface-hi: #121316;   /* hover / active */
+  --c-line-soft: #1a1a1a;    /* divider inside a surface */
   --c-ink: #14161a;     /* the car's bodywork black — cool, b > r */
   --c-line: #262626;    /* hairline on black */
   --c-white: #f2f0ee;
@@ -41,6 +48,10 @@
      the same job here without importing someone else's green. Used sparingly
      — current seat, running roles, wins. */
   --c-giallo: #ffd400;
+  /* The second signal. Red is result; yellow is caution, in-progress,
+     stressed. Yellow-flag / red-flag is the F1 state system and it costs
+     nothing to use one that already exists. */
+  --c-yellow: var(--c-giallo);
 
   /* Superseded names, kept only so nothing silently loses its colour. */
   --c-tomato: var(--c-rosso);
@@ -57,15 +68,20 @@
 
      Rajdhani is a static family, so font-stretch does nothing here; the two
      width tokens are kept at 100 purely so existing rules stay valid. */
-  /* Barlow Condensed used to sit between these two. It was only ever reached
-     if Rajdhani failed to load, and the package is no longer installed — so it
-     named a face the site could not serve. */
-  --f-display: 'Rajdhani', 'Arial Narrow', sans-serif;
+  /* Archivo, at the wide end of its width axis.
+     Rajdhani is an esports/HUD face — it reads "gaming", which is the wrong
+     industry to evoke on an engineer's portfolio. Wide, heavy, uppercase
+     grotesque is what motorsport livery typography actually is, and Archivo
+     carries a real width axis so the titles can be set genuinely expanded
+     rather than letter-spaced to fake it. */
+  --f-display: 'Archivo Variable', 'Archivo', 'Arial Narrow', Helvetica, sans-serif;
   --f-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --f-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
 
-  --w-display: 100;
-  --w-display-max: 100;
+  /* Live now — Rajdhani was static, so font-stretch did nothing and these sat
+     at 100 purely to keep existing rules valid. Archivo spans 62–125%. */
+  --w-display: 118;
+  --w-display-max: 118;
 
   /* Was 0.6875rem — 11px. Every small label on the site used it, and 11px
      tracked wide in grey is genuinely hard to read. 13px is still clearly a
@@ -97,6 +113,7 @@
   --s-7: 3rem;
   --s-8: 4.5rem;
   --s-9: 7rem;
+  --s-10: 10rem;
 
   /* --- borders ------------------------------------------------------------ */
   --b-hair: 1px;
@@ -105,6 +122,12 @@
   /* --- layout ------------------------------------------------------------- */
   /* Page gutter. 64px desktop, 24px on a phone — was a flat 32px, which left
      the content cramped against the edge on a 1440px screen. */
+  /* R3 — chamfer, never radius. A rounded corner says SaaS; a 45 degree cut
+     says motorsport, aerospace, scrutineering. Panels take the full cut,
+     controls take half. */
+  --chamfer: 14px;
+  --chamfer-sm: 7px;
+
   --s-gutter: 64px;
 
   --wrap: 1320px;

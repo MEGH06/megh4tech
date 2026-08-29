@@ -51,21 +51,36 @@ h1,
 h2,
 h3,
 h4 {
-  /* A tight halo on the glyphs themselves. Belt and braces with the blur
-     behind: if backdrop-filter is unsupported or still compositing, the type
-     is still readable over a bright bodywork panel. */
+  /* A tight halo on the glyphs themselves. Belt and braces with the scrim
+     behind: if the gradient is still compositing, the type is still readable
+     over a bright bodywork panel. */
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+  line-height: var(--lh-tight);
+  text-wrap: balance;
+}
+
+/* R5 — the display face appears a handful of times per screen, not sixty.
+   Section titles and big numbers carry it; everything below h2 is set in the
+   body face, because a display face used for subheadings stops reading as a
+   voice and starts reading as a default. */
+h1,
+h2,
+.display {
   font-family: var(--f-display);
-  /* Rajdhani tops out at 700. */
-  font-weight: 700;
-  /* Upright, normal width. Bold uppercase and nothing else — the F1 reading
-     comes from the car, the red and the layout, not from the letterforms. */
+  font-weight: 800;
   font-stretch: calc(var(--w-display) * 1%);
   font-style: normal;
   text-transform: uppercase;
-  line-height: var(--lh-tight);
-  letter-spacing: -0.005em;
-  text-wrap: balance;
+  letter-spacing: -0.02em;
+}
+
+h3,
+h4 {
+  font-family: var(--f-body);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  line-height: var(--lh-snug);
 }
 
 p,
@@ -160,6 +175,40 @@ button {
   font-variant-numeric: tabular-nums;
 }
 
+/* ------------------------------------------------------------------ panel
+   R3 + R4. Everything that is a discrete object — a card, a row group, a stat,
+   a form field — sits on a filled surface with a hairline and a cut corner.
+
+   The chamfer is the whole reason this reads as an instrument rather than a
+   dashboard template: a radius is the default of every UI kit shipped in the
+   last decade, and a 45 degree cut is what appears on scrutineering panels,
+   avionics bezels and pit equipment. It costs one clip-path. */
+.panel {
+  background: var(--c-surface);
+  border: var(--b-hair) solid var(--c-line);
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--chamfer)) 0,
+    100% var(--chamfer),
+    100% 100%,
+    var(--chamfer) 100%,
+    0 calc(100% - var(--chamfer))
+  );
+}
+
+/* Controls take half the cut — a 14px notch on a 36px button eats the corner
+   rather than marking it. */
+.panel--sm {
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--chamfer-sm)) 0,
+    100% var(--chamfer-sm),
+    100% 100%,
+    var(--chamfer-sm) 100%,
+    0 calc(100% - var(--chamfer-sm))
+  );
+}
+
 /* ----------------------------------------------------------------- columns
    Content takes one side of the frame and the car takes the other. The car is
    never covered — it shrinks and slides across (see three/dock.js).
@@ -181,6 +230,34 @@ button {
    edge on any width without touching the viewport edge on an ultrawide. */
 section {
   padding-inline: max(var(--s-gutter), calc((100% - var(--wrap)) / 2));
+}
+
+/* R8 — weight classes. Every section carried an identical 112px, which is why
+   nothing on the page felt more important than anything else. An ID selector
+   beats the component's own class, so this sets the rhythm from one place
+   rather than editing nine modules.
+
+   Major gets the space because those three are what a client is here for.
+   Minor gets less because Education and Skills are reference, not argument. */
+#projects,
+#record,
+#paddock {
+  padding-block: var(--s-10);
+}
+
+#about,
+#research,
+#contact {
+  padding-block: var(--s-9);
+}
+
+#education,
+#sponsors {
+  padding-block: var(--s-8);
+}
+
+#home {
+  padding-block: 0;
 }
 
 @media (max-width: 820px) {

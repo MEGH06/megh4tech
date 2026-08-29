@@ -9,7 +9,7 @@
   margin-top: var(--s-7);
   padding-top: var(--s-5);
   border-top: var(--b-heavy) solid transparent;
-  border-image: var(--rule-heavy) 1;
+  border-image: var(--rule-hair) 1;
 }
 
 .title {
@@ -40,7 +40,7 @@
   font-size: var(--t-xs);
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--c-rosso-text);
+  color: var(--c-grey);
 }
 
 .label i {
@@ -61,6 +61,18 @@
   /* Without this a select inherits the OS chrome and looks pasted in. */
   appearance: none;
   border-radius: 0;
+  background: var(--c-surface);
+  border: var(--b-hair) solid var(--c-line);
+  border-bottom: var(--b-hair) solid var(--c-line);
+  padding: var(--s-3) var(--s-4);
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--chamfer-sm)) 0,
+    100% var(--chamfer-sm),
+    100% 100%,
+    var(--chamfer-sm) 100%,
+    0 calc(100% - var(--chamfer-sm))
+  );
 }
 
 .input::placeholder {

@@ -7,8 +7,8 @@
 }
 
 .head {
-  border-bottom: var(--b-heavy) solid var(--c-rosso);
-  border-image: var(--rule-heavy) 1;
+  border-bottom: var(--b-hair) solid var(--c-line);
+  border-image: var(--rule-hair) 1;
   padding-bottom: var(--s-3);
   margin-bottom: var(--s-5);
 }
@@ -238,7 +238,7 @@ a.v:hover {
   gap: 0.35em;
   padding-top: var(--s-3);
   border-top: 2px solid transparent;
-  border-image: var(--rule-heavy) 1;
+  border-image: var(--rule-hair) 1;
 }
 
 .k {
@@ -246,7 +246,7 @@ a.v:hover {
   font-size: var(--t-xs);
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--c-rosso-text);
+  color: var(--c-grey);
 }
 
 .v {

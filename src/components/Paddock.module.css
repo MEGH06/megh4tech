@@ -13,8 +13,6 @@
   align-items: baseline;
   flex-wrap: wrap;
   gap: var(--s-4);
-  border-bottom: var(--b-heavy) solid var(--c-rosso);
-  border-image: var(--rule-heavy) 1;
   padding-bottom: var(--s-3);
   margin-bottom: var(--s-6);
 }
@@ -38,6 +36,9 @@
   border-top: var(--b-hair) solid var(--c-line);
   border-image: var(--rule-hair) 1;
   margin-bottom: var(--s-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
 }
 
 /* Two columns, not three. The third held an invented "Running" status pill
@@ -135,7 +136,7 @@
   width: 100%;
   aspect-ratio: 21 / 9;
   object-fit: cover;
-  border: var(--b-heavy) solid var(--c-rosso);
+  border: var(--b-hair) solid var(--c-line);
 }
 
 
