@@ -1,13 +1,12 @@
 .section {
   /* transparent: the .col gradient backs the text, nothing backs the car */
-  padding: var(--s-9) 0;
+  padding-block: var(--s-9);
 }
 
 .wrap {
   max-width: var(--wrap);
   margin: 0 auto;
-  padding: 0 var(--s-6);
-}
+  }
 
 .head {
   display: flex;
@@ -119,7 +118,7 @@
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  color: var(--c-grey-2);
+  color: var(--c-grey);
 }
 
 .event {
@@ -139,7 +138,7 @@
   font-size: var(--t-xs);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--c-grey-2);
+  color: var(--c-grey);
   margin-top: var(--s-2);
 }
 
@@ -165,12 +164,11 @@
 
 @media (max-width: 760px) {
   .section {
-    padding: var(--s-8) 0;
+    padding-block: var(--s-8);
   }
 
   .wrap {
-    padding: 0 var(--s-4);
-  }
+    }
 
   .summary {
     gap: var(--s-6);
@@ -224,7 +222,7 @@
   font-size: var(--t-xs);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--c-grey-2);
+  color: var(--c-grey);
 }
 
 .event {
@@ -240,7 +238,7 @@
   font-size: var(--t-xs);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--c-grey-2);
+  color: var(--c-grey);
   margin-top: 0.4em;
 }
 
@@ -274,7 +272,7 @@
   font-size: var(--t-xs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--c-grey-2);
+  color: var(--c-grey);
 }
 
 @media (max-width: 700px) {

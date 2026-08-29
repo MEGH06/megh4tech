@@ -103,8 +103,7 @@
 .wrap {
   max-width: var(--wrap);
   margin: 0 auto;
-  padding: 0 var(--s-6);
-}
+  }
 
 /* A soft pool of dark under the corner only, so the name holds its contrast
    without the whole lower half of the frame going opaque. */
@@ -187,7 +186,7 @@
   font-size: var(--t-xs);
   letter-spacing: var(--tr-label);
   text-transform: uppercase;
-  color: var(--c-grey-2);
+  color: var(--c-grey);
   transition: color var(--dur) var(--ease-soft);
 }
 
@@ -233,8 +232,7 @@
 
 @media (max-width: 760px) {
   .wrap {
-    padding: 0 var(--s-4);
-  }
+    }
 
   .scroll {
     right: var(--s-4);

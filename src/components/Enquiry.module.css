@@ -45,7 +45,7 @@
 
 .label i {
   font-style: normal;
-  color: var(--c-grey-2);
+  color: var(--c-grey);
   letter-spacing: 0.14em;
 }
 
@@ -127,7 +127,7 @@ select.input {
   font-size: var(--t-xs);
   letter-spacing: 0.06em;
   line-height: 1.5;
-  color: var(--c-grey-2);
+  color: var(--c-grey);
   margin: 0;
   max-width: 42ch;
 }

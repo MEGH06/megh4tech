@@ -1,5 +1,6 @@
 import { DRIVER, DRIVER_ROLES } from '../data/driver';
 import { asset } from '../lib/assets';
+import { scrollToEl } from '../lib/scrollTo';
 import styles from './GridSlot.module.css';
 
 // Served from public/ as a plain URL rather than imported, so it streams as a
@@ -53,7 +54,11 @@ export default function GridSlot() {
         </div>
       </div>
 
-      <a className={styles.scroll} href="#education">
+      <a
+        className={styles.scroll}
+        href="#education"
+        onClick={(e) => { e.preventDefault(); scrollToEl(document.getElementById('education')); }}
+      >
         <span>Scroll</span>
         <i className={styles.arrow} aria-hidden="true" />
       </a>

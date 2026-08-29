@@ -1,5 +1,5 @@
 .section {
-  padding: var(--s-9) 0;
+  padding-block: var(--s-9);
 }
 
 .wrap {
@@ -24,7 +24,7 @@
 }
 
 .item {
-  padding: var(--s-5) 0;
+  padding-block: var(--s-5);
   border-bottom: var(--b-hair) solid var(--c-line);
   border-image: var(--rule-hair) 1;
 }
@@ -98,6 +98,6 @@
 
 @media (max-width: 760px) {
   .section {
-    padding: var(--s-8) 0;
+    padding-block: var(--s-8);
   }
 }

@@ -1,5 +1,5 @@
 .section {
-  padding: var(--s-9) 0;
+  padding-block: var(--s-9);
 }
 
 .wrap {
@@ -82,13 +82,13 @@
   font-size: var(--t-xs);
   letter-spacing: var(--tr-label);
   text-transform: uppercase;
-  color: var(--c-grey-2);
+  color: var(--c-grey);
   margin-top: var(--s-2);
 }
 
 @media (max-width: 760px) {
   .section {
-    padding: var(--s-8) 0;
+    padding-block: var(--s-8);
   }
 
   .para {

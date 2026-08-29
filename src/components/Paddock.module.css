@@ -1,13 +1,12 @@
 .section {
   /* transparent: the .col gradient backs the text, nothing backs the car */
-  padding: var(--s-9) 0;
+  padding-block: var(--s-9);
 }
 
 .wrap {
   max-width: var(--wrap);
   margin: 0 auto;
-  padding: 0 var(--s-6);
-}
+  }
 
 .head {
   display: flex;
@@ -49,7 +48,7 @@
   grid-template-columns: 190px 1fr;
   gap: var(--s-5);
   align-items: start;
-  padding: var(--s-5) 0;
+  padding-block: var(--s-5);
   border-bottom: var(--b-hair) solid var(--c-line);
   border-image: var(--rule-hair) 1;
   transition: background var(--dur) var(--ease-soft);
@@ -147,7 +146,7 @@
   font-size: var(--t-xs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--c-grey-2);
+  color: var(--c-grey);
   margin-top: var(--s-3);
 }
 
@@ -160,10 +159,9 @@
 
 @media (max-width: 760px) {
   .section {
-    padding: var(--s-8) 0;
+    padding-block: var(--s-8);
   }
 
   .wrap {
-    padding: 0 var(--s-4);
-  }
+    }
 }

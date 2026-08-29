@@ -59,7 +59,7 @@
   font-size: 0.6875rem;
   padding: 0.15em 0.45em;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  color: var(--c-grey-2);
+  color: var(--c-grey);
 }
 
 .prompt {
@@ -182,7 +182,7 @@
 .hintCol {
   font-family: var(--f-mono);
   font-size: var(--t-xs);
-  color: var(--c-grey-2);
+  color: var(--c-grey);
   text-align: right;
   white-space: nowrap;
   overflow: hidden;
@@ -210,7 +210,7 @@
   font-family: var(--f-mono);
   font-size: 0.6875rem;
   letter-spacing: 0.08em;
-  color: var(--c-grey-2);
+  color: var(--c-grey);
 }
 
 @media (max-width: 700px) {

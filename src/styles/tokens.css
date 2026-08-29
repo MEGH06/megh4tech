@@ -103,6 +103,10 @@
   --b-heavy: 3px;
 
   /* --- layout ------------------------------------------------------------- */
+  /* Page gutter. 64px desktop, 24px on a phone — was a flat 32px, which left
+     the content cramped against the edge on a 1440px screen. */
+  --s-gutter: 64px;
+
   --wrap: 1320px;
   --measure: 62ch;
 

@@ -38,14 +38,14 @@ export default function PitBoard() {
         <ul className={styles.routes}>
           <li data-step="1">
             <span className={styles.k}>Email</span>
-            <a className={styles.v} href={`mailto:${CONTACT.email}`}>
+            <a className={styles.vData} href={`mailto:${CONTACT.email}`}>
               {CONTACT.email}
             </a>
           </li>
           <li data-step="2">
             <span className={styles.k}>Phone</span>
             <a
-              className={styles.v}
+              className={styles.vData}
               href={`tel:${CONTACT.phone.replace(/\s/g, '')}`}
             >
               {CONTACT.phone}

@@ -1,5 +1,5 @@
 .section {
-  padding: var(--s-9) 0 var(--s-8);
+  padding-block: var(--s-9) var(--s-8);
 }
 
 .wrap {
@@ -41,7 +41,7 @@
   grid-template-columns: 110px 1fr;
   gap: var(--s-4);
   align-items: baseline;
-  padding: var(--s-3) 0;
+  padding-block: var(--s-3);
   border-bottom: var(--b-hair) solid var(--c-line);
   border-image: var(--rule-hair) 1;
 }
@@ -51,19 +51,7 @@
   font-size: var(--t-xs);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--c-grey-2);
-}
-
-.v {
-  font-family: var(--f-display);
-  font-weight: 700;
-  font-stretch: calc(var(--w-display) * 1%);
-  font-size: clamp(1rem, 2.2vw, 1.35rem);
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
-  color: var(--c-white);
-  transition: color var(--dur) var(--ease-soft);
-  word-break: break-word;
+  color: var(--c-grey);
 }
 
 a.v:hover {
@@ -78,7 +66,7 @@ a.v:hover {
   font-size: var(--t-xs);
   letter-spacing: var(--tr-label);
   text-transform: uppercase;
-  color: var(--c-grey-2);
+  color: var(--c-grey);
   margin: 0 0 var(--s-3);
 }
 
@@ -108,7 +96,7 @@ a.v:hover {
   font-size: var(--t-xs);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--c-grey-2);
+  color: var(--c-grey);
   margin: 0 0 var(--s-3);
 }
 
@@ -141,7 +129,7 @@ a.v:hover {
   display: flex;
   align-items: center;
   gap: var(--s-3);
-  padding: var(--s-3) 0;
+  padding-block: var(--s-3);
   border-bottom: 2px solid var(--c-line);
   transition: border-color 240ms var(--ease-soft);
 }
@@ -189,13 +177,13 @@ a.v:hover {
   font-family: var(--f-mono);
   font-size: var(--t-xs);
   letter-spacing: 0.08em;
-  color: var(--c-grey-2);
+  color: var(--c-grey);
 }
 
 .socialGo {
   margin-left: auto;
   font-size: 1rem;
-  color: var(--c-grey-2);
+  color: var(--c-grey);
   transition: color 240ms var(--ease-soft), transform 240ms var(--ease-soft);
 }
 
@@ -216,7 +204,7 @@ a.v:hover {
   }
 
   .section {
-    padding: var(--s-8) 0 var(--s-7);
+    padding-block: var(--s-8) var(--s-7);
   }
 
   .routes li {
@@ -264,12 +252,32 @@ a.v:hover {
 .v {
   font-family: var(--f-display);
   font-weight: 700;
+  font-stretch: calc(var(--w-display) * 1%);
   font-size: clamp(1.15rem, 2.4vw, 1.75rem);
   line-height: 1.1;
+  text-transform: uppercase;
   letter-spacing: 0.01em;
   color: var(--c-white);
-  transition: color 240ms var(--ease-soft);
-  word-break: break-word;
+  transition: color var(--dur) var(--ease-soft);
+}
+
+/* Email and phone are data, not display type.
+   They were set in the display face, uppercased, at up to 28px — and a 22
+   character address does not fit the column at that size, so it broke
+   mid-word as "…GMAIL.CO / M". Mono at a data size fits at every width, and
+   an address is more legible lowercase anyway: MEGHDAVE2006@GMAIL.COM makes
+   the reader parse it, meghdave2006@gmail.com is just read. */
+.vData {
+  font-family: var(--f-mono);
+  font-weight: 500;
+  font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: var(--c-white);
+  transition: color var(--dur) var(--ease-soft);
+  /* Last resort only, and it can no longer fire at these sizes. */
+  overflow-wrap: anywhere;
 }
 
 a.v:hover {

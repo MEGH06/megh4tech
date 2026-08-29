@@ -102,7 +102,7 @@
   font-size: var(--t-xs);
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: var(--c-grey-2);
+  color: var(--c-grey);
 }
 
 /* A blocking full-screen countdown is precisely the wrong thing to serve

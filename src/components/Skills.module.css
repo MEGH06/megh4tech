@@ -7,7 +7,7 @@
  */
 
 .section {
-  padding: var(--s-9) 0;
+  padding-block: var(--s-9);
   position: relative;
 }
 
@@ -47,7 +47,7 @@
    to find X, not to be told which X Megh likes best. */
 
 .group {
-  padding: var(--s-5) 0 var(--s-6);
+  padding-block: var(--s-5) var(--s-6);
 }
 
 /* The category label sits on a hairline that fades at both ends, so the sheet
@@ -125,7 +125,7 @@
 
 @media (max-width: 760px) {
   .section {
-    padding: var(--s-8) 0;
+    padding-block: var(--s-8);
   }
 
   .sheet {
@@ -133,7 +133,7 @@
   }
 
   .group {
-    padding: var(--s-4) 0 var(--s-5);
+    padding-block: var(--s-4) var(--s-5);
   }
 
   .marks {

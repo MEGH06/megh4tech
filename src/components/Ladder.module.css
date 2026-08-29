@@ -5,7 +5,7 @@
  */
 
 .section {
-  padding: var(--s-9) 0;
+  padding-block: var(--s-9);
 }
 
 .wrap {
@@ -107,7 +107,7 @@
   font-size: var(--t-xs);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--c-grey-2);
+  color: var(--c-grey);
   margin: 0;
   max-width: none;
 }
@@ -134,7 +134,7 @@
   align-items: baseline;
   gap: 0.3em;
   justify-self: end;
-  color: var(--c-grey-2);
+  color: var(--c-grey);
 }
 
 .scoreValue {
@@ -154,7 +154,7 @@
   font-size: var(--t-xs);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--c-grey-2);
+  color: var(--c-grey);
 }
 
 .live .scoreUnit {
@@ -163,7 +163,7 @@
 
 @media (max-width: 760px) {
   .section {
-    padding: var(--s-8) 0;
+    padding-block: var(--s-8);
   }
 
   .rungs {
