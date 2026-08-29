@@ -1,0 +1,57 @@
+/* An annotated window onto the fixed car canvas.
+ *
+ * Transparent by design — no background, no border, no rules, and since the
+ * readout panel was removed, no content either. Any boxing here would put the
+ * car back in a frame, which is what made the old bands read as pictures.
+ *
+ * The height is deliberate and unchanged: a full viewport of empty space is
+ * what lets the car's whole line show between one section and the next.
+ */
+
+.window {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+/* Full viewport. The canvas is fixed and full-screen, so a window shorter
+   than the viewport means opaque sections cover most of it and the car shows
+   through a slit. A window has to own the screen to reveal the car. */
+.short { min-height: 88svh; }
+.tall { min-height: 100svh; }
+
+
+
+
+/* --- light shaft ---------------------------------------------------------- */
+
+.shaft {
+  position: absolute;
+  top: -25%;
+  bottom: -25%;
+  left: 58%;
+  width: clamp(70px, 10vw, 180px);
+  transform: skewX(-16deg);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.09) 42%,
+    rgba(255, 255, 255, 0.03) 74%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  filter: blur(3px);
+  pointer-events: none;
+}
+
+.right .shaft { left: 26%; }
+
+@media (max-width: 760px) {
+  /* Shorter gaps on a phone: a full viewport of empty space between every
+     section is a long scroll when each section is already taller. */
+  .tall { min-height: 92svh; }
+  .short { min-height: 78svh; }
+
+}

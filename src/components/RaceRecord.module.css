@@ -1,0 +1,283 @@
+.section {
+  /* transparent: the .col gradient backs the text, nothing backs the car */
+  padding: var(--s-9) 0;
+}
+
+.wrap {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 var(--s-6);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  border-bottom: var(--b-heavy) solid var(--c-rosso);
+  border-image: var(--rule-heavy) 1;
+  padding-bottom: var(--s-3);
+  margin-bottom: var(--s-6);
+}
+
+.tag {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--c-rosso-text);
+}
+
+.title {
+  font-size: var(--t-lg);
+  margin: 0;
+}
+
+/* --- summary ------------------------------------------------------------- */
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-8);
+  padding-bottom: var(--s-6);
+  margin-bottom: var(--s-5);
+  border-bottom: var(--b-hair) solid var(--c-line);
+  border-image: var(--rule-hair) 1;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.tally {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: clamp(3.5rem, 11vw, 7rem);
+  line-height: 0.82;
+  /* Without tabular figures the digits jitter sideways as the tally counts. */
+  font-variant-numeric: tabular-nums;
+  color: var(--c-white);
+}
+
+/* Wins are the headline, so only the first tally is rosso. */
+.stat:first-child .tally {
+  color: var(--c-rosso-text);
+}
+
+.statLabel {
+  font-family: var(--f-mono);
+  /* These three name the whole section's claim, so they are set as a heading
+     would be, not as a caption: bigger, bolder, white. They were 11px grey and
+     read as small print under a big number. */
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-white);
+  margin-top: var(--s-3);
+}
+
+/* --- table --------------------------------------------------------------- */
+
+/* `overflow-x: auto` alone does not contain this. A box's automatic minimum
+   size is its content, so the scroller grew to the table's 620px min-width and
+   pushed the page sideways instead of scrolling inside itself — the page was
+   780px wide on a 390px phone. `min-width: 0` opts out of that, and
+   `max-width: 100%` pins it to the column. */
+.scroller {
+  overflow-x: auto;
+  min-width: 0;
+  max-width: 100%;
+  /* Momentum scrolling, and a hint that there is more to the right. */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+
+
+/* Row, not cell — see the note in Ladder.module.css. */
+
+
+
+/* background-COLOR, not the shorthand: the shorthand resets background-image
+   and would erase the row's rule on hover. */
+
+.colRound {
+  width: 64px;
+}
+
+.colResult {
+  width: 110px;
+}
+
+.r {
+  text-align: right;
+}
+
+.num {
+  font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--c-grey-2);
+}
+
+.event {
+  display: block;
+  font-family: var(--f-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: clamp(1.05rem, 2.4vw, 1.5rem);
+  line-height: 1.05;
+  color: var(--c-white);
+}
+
+.venue {
+  display: block;
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-grey-2);
+  margin-top: var(--s-2);
+}
+
+.result {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.12;
+  letter-spacing: 0.04em;
+  color: var(--c-white);
+  font-variant-numeric: tabular-nums;
+}
+
+/* One colour rule does all the work: nine wins register at a glance without
+   a badge on every row. */
+.win .result {
+  color: var(--c-rosso-text);
+}
+
+.win td:first-child {
+  box-shadow: inset 3px 0 0 var(--c-rosso);
+}
+
+@media (max-width: 760px) {
+  .section {
+    padding: var(--s-8) 0;
+  }
+
+  .wrap {
+    padding: 0 var(--s-4);
+  }
+
+  .summary {
+    gap: var(--s-6);
+  }
+}
+
+
+/* --- results as builds ----------------------------------------------------
+   The placing sits in a narrow rail; the build takes the rest. */
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-6);
+  margin-top: var(--s-6);
+}
+
+.rows > li {
+  display: grid;
+  grid-template-columns: 132px 1fr;
+  gap: var(--s-4) var(--s-5);
+  padding-bottom: var(--s-5);
+  border-bottom: var(--b-hair) solid transparent;
+  border-image: var(--rule-hair) 1;
+}
+
+.place {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  padding-top: 0.2em;
+}
+
+.result {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.12;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--c-grey);
+  line-height: 1;
+}
+
+.win .result {
+  color: var(--c-rosso-text);
+}
+
+.when {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-grey-2);
+}
+
+.event {
+  font-size: clamp(1.15rem, 2.5vw, 1.6rem);
+  line-height: 1.1;
+  color: var(--c-white);
+  margin: 0 0 var(--s-3);
+}
+
+.venue {
+  display: block;
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-grey-2);
+  margin-top: 0.4em;
+}
+
+.project {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-rosso-text);
+  margin: 0 0 var(--s-2);
+  max-width: none;
+}
+
+.blurb {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--c-grey);
+  max-width: 68ch;
+  margin: 0 0 var(--s-4);
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em 1.2em;
+}
+
+.stack li {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-grey-2);
+}
+
+@media (max-width: 700px) {
+  .rows > li { grid-template-columns: 1fr; gap: var(--s-3); }
+  .place { flex-direction: row; align-items: baseline; gap: var(--s-4); }
+}

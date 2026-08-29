@@ -1,0 +1,225 @@
+/* The command bar.
+ *
+ * Terminal in register, not in costume: a prompt, monospace, a caret. No fake
+ * `sudo` jokes, no ASCII art — the moment it performs being a terminal rather
+ * than working like one, it reads as a toy.
+ */
+
+/* --- the affordance ------------------------------------------------------- */
+
+.hint {
+  position: fixed;
+  top: var(--s-4);
+  right: var(--s-5);
+  z-index: 120;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.7em 1em;
+  min-height: 44px;
+  background: rgba(5, 5, 5, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-grey);
+
+  /* Absent on the landing, exactly like the hamburger opposite it. The first
+     screen is the car, the name and three tags; a floating chip over that is
+     the same intrusion the section plates were. Both controls fade in together
+     once the page starts moving, framing it left and right. */
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0, -8px, 0);
+  transition:
+    opacity 260ms var(--ease-soft),
+    transform 260ms var(--ease-soft),
+    visibility 0s linear 260ms,
+    color 240ms var(--ease-soft),
+    border-color 240ms var(--ease-soft);
+}
+
+.hintIn {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+
+.hint:hover {
+  color: var(--c-white);
+  border-color: var(--c-rosso);
+}
+
+.kbd,
+.foot kbd {
+  font-family: var(--f-mono);
+  font-size: 0.6875rem;
+  padding: 0.15em 0.45em;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--c-grey-2);
+}
+
+.prompt {
+  color: var(--c-rosso-text);
+  font-family: var(--f-mono);
+  font-weight: 600;
+}
+
+@media (max-width: 760px) {
+  /* The hamburger already occupies the top corners on a phone, and typing is
+     not how anyone navigates on one. */
+  .hint { display: none; }
+}
+
+/* --- the panel ------------------------------------------------------------ */
+
+.wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 140;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12vh var(--s-5) var(--s-5);
+  opacity: 0;
+  transition: opacity 240ms var(--ease-soft);
+}
+
+.wrapOpen { opacity: 1; }
+
+.veil {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 3, 4, 0.72);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  border: none;
+  cursor: default;
+}
+
+.panel {
+  position: relative;
+  width: min(680px, 100%);
+  background: rgba(9, 10, 12, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 2px solid var(--c-rosso);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.7);
+  transform: translateY(-8px);
+  transition: transform 240ms var(--ease-soft);
+}
+
+.wrapOpen .panel { transform: none; }
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  padding: var(--s-4) var(--s-5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--f-mono);
+  font-size: 1rem;
+  color: var(--c-white);
+  background: transparent;
+  border: none;
+  padding: 0.2em 0;
+  caret-color: var(--c-rosso);
+}
+
+.input:focus { outline: none; }
+.input::placeholder { color: var(--c-grey-2); }
+
+/* --- results -------------------------------------------------------------- */
+
+.list {
+  max-height: 46vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 74px 1fr auto;
+  align-items: baseline;
+  gap: var(--s-4);
+  width: 100%;
+  text-align: left;
+  padding: 0.7em var(--s-5);
+  border-left: 2px solid transparent;
+  transition: background 240ms var(--ease-soft), border-color 240ms var(--ease-soft);
+}
+
+.rowOn {
+  background: rgba(200, 16, 46, 0.12);
+  border-left-color: var(--c-rosso);
+}
+
+.kind {
+  font-family: var(--f-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-rosso-text);
+}
+
+.label {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--c-white);
+}
+
+.hintCol {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  color: var(--c-grey-2);
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 22ch;
+}
+
+.empty {
+  padding: var(--s-5);
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  color: var(--c-grey);
+}
+
+.empty code {
+  color: var(--c-rosso-text);
+}
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  padding: 0.7em var(--s-5);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: var(--f-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  color: var(--c-grey-2);
+}
+
+@media (max-width: 700px) {
+  .row { grid-template-columns: 1fr; gap: 0.2em; }
+  .hintCol { text-align: left; max-width: none; }
+  .foot { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrap, .panel { transition: opacity 100ms linear; }
+  .panel { transform: none; }
+}

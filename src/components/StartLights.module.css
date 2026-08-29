@@ -1,0 +1,122 @@
+.veil {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.5rem, 4vh, 3rem);
+  background: var(--c-black);
+  /* Cleared, not faded to nothing: the panel lifts as one plate so lights out
+     reads as a curtain going up rather than a dissolve. */
+  transition:
+    opacity 380ms cubic-bezier(0.7, 0, 0.3, 1),
+    transform 380ms cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.clearing {
+  opacity: 0;
+  transform: translate3d(0, -2%, 0) scale(1.04);
+  pointer-events: none;
+}
+
+.gantry {
+  display: flex;
+  gap: clamp(0.5rem, 1.6vw, 1.1rem);
+}
+
+/* Two lamps per column, as on the real gantry. One row reads as a progress
+   bar; two reads as a signal. */
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.4rem, 1.2vw, 0.85rem);
+  padding: clamp(0.4rem, 1.2vw, 0.85rem);
+  background: #0c0c0d;
+  border: 1px solid #1c1c1e;
+}
+
+.lamp {
+  display: block;
+  width: clamp(26px, 5.4vw, 54px);
+  height: clamp(26px, 5.4vw, 54px);
+  border-radius: 50%;
+  background: #171719;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9);
+  /* Illumination is instant. A lamp that eases on is a lamp nobody believes. */
+  transition: none;
+}
+
+.on {
+  background: radial-gradient(circle at 38% 34%, #ff5a4a 0%, var(--c-rosso) 46%, #7d0a1c 100%);
+  box-shadow:
+    0 0 14px rgba(200, 16, 46, 0.85),
+    0 0 46px rgba(200, 16, 46, 0.45),
+    inset 0 2px 6px rgba(255, 255, 255, 0.28);
+}
+
+/* --- the signature -------------------------------------------------------- */
+
+.sig {
+  display: block;
+  width: clamp(200px, 38vw, 320px);
+  height: auto;
+  /* Round caps stick out past the coordinate box at the ends of the stroke. */
+  overflow: visible;
+}
+
+.sig path {
+  fill: none;
+  stroke: var(--c-white);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  /* The element carries pathLength="1", which renormalises the geometry: the
+     dash values below are the same whatever artwork is dropped into
+     `data/signature.js`. No measurement, and no length constant to keep in
+     sync with the path. */
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+
+  /* 120ms + 900ms = 1020ms, against COLUMNS * STEP = 5 x 210 = 1050ms in
+     StartLights.jsx. The name finishes as the fifth lamp lights, so the
+     randomised hold that follows belongs entirely to the gantry.
+
+     A CSS animation, deliberately. This page runs a WebGL canvas on
+     `frameloop="demand"`, and every animation bug it has had was rAF being
+     starved by the renderer — see the note in `f1/Tally.jsx`. This one runs on
+     the compositor and cannot be. */
+  animation: draw 900ms 120ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.caption {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--c-grey-2);
+}
+
+/* A blocking full-screen countdown is precisely the wrong thing to serve
+   someone who has asked for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  .veil {
+    display: none;
+  }
+
+  /* Belt and braces. The veil above is already gone, but if it is ever shown
+     by another route the mark must be complete rather than invisible — a path
+     left at dashoffset 1 draws nothing at all. */
+  .sig path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}

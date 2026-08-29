@@ -1,0 +1,181 @@
+/* Education as a climb, not a table.
+ *
+ * Three rows is too few to justify columns. Each stage gets room, the score is
+ * the anchor, and a rail down the left carries the progression.
+ */
+
+.section {
+  padding: var(--s-9) 0;
+}
+
+.wrap {
+  max-width: var(--wrap);
+}
+
+.head {
+  padding-bottom: var(--s-3);
+  margin-bottom: var(--s-6);
+  border-bottom: var(--b-heavy) solid transparent;
+  border-image: var(--rule-heavy) 1;
+}
+
+.title {
+  font-size: var(--t-lg);
+  margin: 0;
+}
+
+/* --- the rungs ------------------------------------------------------------ */
+
+.rungs {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-6);
+  padding-left: var(--s-6);
+}
+
+/* The rail. Fades at the foot so the climb reads as continuing downward into
+   history rather than stopping on a hard tick. */
+.rungs::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 0.6em;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    var(--c-rosso) 0%,
+    var(--c-rosso) 12%,
+    var(--c-line) 46%,
+    transparent 100%
+  );
+}
+
+.rungs > li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: var(--s-4) var(--s-5);
+}
+
+.node {
+  position: absolute;
+  left: calc(var(--s-6) * -1);
+  top: 0.5em;
+  width: 11px;
+  height: 11px;
+  background: var(--c-black);
+  border: 2px solid var(--c-line);
+}
+
+.live .node {
+  background: var(--c-rosso);
+  border-color: var(--c-rosso);
+}
+
+.body {
+  min-width: 0;
+}
+
+.institution {
+  font-size: clamp(1.15rem, 2.5vw, 1.6rem);
+  line-height: 1.08;
+  margin: 0 0 0.25em;
+  color: var(--c-grey);
+}
+
+.live .institution {
+  color: var(--c-white);
+}
+
+.qualification {
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--c-grey);
+  margin: 0 0 0.4em;
+  max-width: none;
+}
+
+.years {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5em var(--s-3);
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-grey-2);
+  margin: 0;
+  max-width: none;
+}
+
+.now {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  color: var(--c-rosso-text);
+}
+
+.now::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  background: var(--c-rosso);
+}
+
+/* --- the score ------------------------------------------------------------
+   The anchor. Big enough to be the thing you see first on the live rung. */
+
+.score {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3em;
+  justify-self: end;
+  color: var(--c-grey-2);
+}
+
+.scoreValue {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 5vw, 3.1rem);
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+}
+
+.live .score {
+  color: var(--c-white);
+}
+
+.scoreUnit {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-grey-2);
+}
+
+.live .scoreUnit {
+  color: var(--c-rosso-text);
+}
+
+@media (max-width: 760px) {
+  .section {
+    padding: var(--s-8) 0;
+  }
+
+  .rungs {
+    gap: var(--s-5);
+    padding-left: var(--s-5);
+  }
+
+  .node {
+    left: calc(var(--s-5) * -1);
+  }
+
+  .rungs > li {
+    grid-template-columns: 1fr auto;
+  }
+}

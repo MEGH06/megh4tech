@@ -1,0 +1,141 @@
+/* ==========================================================================
+   MP4/4 — design tokens
+   --------------------------------------------------------------------------
+   Black, white, bright red. Maximum contrast, no half-tones.
+   Custom properties only — importing this file changes nothing on its own.
+   ========================================================================== */
+
+:root {
+  /* --- livery ------------------------------------------------------------
+     Three values doing all the work. Red is not an accent here — it is a
+     ground colour in its own right, used as full-bleed bands. Nothing is
+     tinted, nothing is soft.                                               */
+
+  --c-black: #050505;   /* page ground */
+  --c-panel: #101010;   /* raised block on black */
+  --c-ink: #14161a;     /* the car's bodywork black — cool, b > r */
+  --c-line: #262626;    /* hairline on black */
+  --c-white: #f2f0ee;
+  --c-grey: #9a9a9a;    /* secondary type on black */
+  /* Was #5c5c5c, which measured 3.05:1 on the page ground — below the 4.5:1
+     WCAG AA floor for small text, and it is used for almost every small mono
+     label on the site. 66 elements failed. #787878 is the first value that
+     passes at 4.62:1. */
+  --c-grey-2: #787878;  /* tertiary — passes AA at small sizes */
+
+  /* Rosso Corsa, Pantone 186 C — the historic Ferrari racing red, not the
+     modern orange-leaning #FF2800. This is the exact value the car's deck is
+     painted with, and that is deliberate: two nearly-identical reds on one
+     page reads as a mistake rather than as a palette. */
+  --c-rosso: #c8102e;
+  /* Rosso is the brand colour and stays exactly as it is for fills, rules and
+     blocks, where contrast rules apply to the shape and not to type.
+     But at 3.46:1 it fails as SMALL TEXT, and it is used for a great many
+     11px labels. This is the same hue lifted 8% in lightness — 4.59:1 — for
+     type only. Same red, legible. */
+  --c-rosso-text: #ec1538;
+  --c-rosso-lo: #941f20;
+
+  /* Giallo Modena. The Saudi GP reference pairs its saturated brand colour
+     with a bright yellow for live/priority marks; Ferrari's own yellow does
+     the same job here without importing someone else's green. Used sparingly
+     — current seat, running roles, wins. */
+  --c-giallo: #ffd400;
+
+  /* Superseded names, kept only so nothing silently loses its colour. */
+  --c-tomato: var(--c-rosso);
+  --c-tomato-lo: var(--c-rosso-lo);
+  --c-red: var(--c-rosso);
+  --c-red-ink: var(--c-rosso-lo);
+
+  /* --- type -------------------------------------------------------------- */
+
+  /* Rajdhani — the face the old site used, and the one in the reference
+     screenshot. Squarish, lightly condensed, bold uppercase: it reads as
+     motorsport signage without being a logo pastiche, which is where the
+     extended italic Archivo went wrong. Plain, legible text.
+
+     Rajdhani is a static family, so font-stretch does nothing here; the two
+     width tokens are kept at 100 purely so existing rules stay valid. */
+  /* Barlow Condensed used to sit between these two. It was only ever reached
+     if Rajdhani failed to load, and the package is no longer installed — so it
+     named a face the site could not serve. */
+  --f-display: 'Rajdhani', 'Arial Narrow', sans-serif;
+  --f-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+
+  --w-display: 100;
+  --w-display-max: 100;
+
+  /* Was 0.6875rem — 11px. Every small label on the site used it, and 11px
+     tracked wide in grey is genuinely hard to read. 13px is still clearly a
+     label and no longer a squint. */
+  --t-xs: 0.8125rem;
+  --t-sm: 0.8125rem;
+  --t-base: 1rem;
+  --t-md: 1.25rem;
+  --t-lg: clamp(1.75rem, 4.5vw, 3rem);
+  --t-xl: clamp(3rem, 9vw, 7rem);
+  --t-2xl: clamp(4.5rem, 16vw, 13rem);   /* the number, and the big stats */
+
+  --lh-tight: 0.9;
+  --lh-snug: 1.25;
+  --lh-body: 1.6;
+
+  --tr-display: 0.01em;
+  /* Wide tracking looks deliberate and costs legibility at small sizes,
+     because it pulls the letters out of word-shapes. Eased off. */
+  --tr-label: 0.13em;
+
+  /* --- space — 8 steps ---------------------------------------------------- */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4.5rem;
+  --s-9: 7rem;
+
+  /* --- borders ------------------------------------------------------------ */
+  --b-hair: 1px;
+  --b-heavy: 3px;
+
+  /* --- layout ------------------------------------------------------------- */
+  --wrap: 1320px;
+  --measure: 62ch;
+
+  /* --- the rake ------------------------------------------------------------
+     One shared skew angle. Every angled edge on the site uses it, so the
+     diagonals read as one system rather than as scattered decoration.      */
+  --rake: -12deg;
+
+  /* --- motion ---------------------------------------------------------------
+
+     Three curves, because one curve cannot do three jobs.
+
+     `--ease` is unchanged and stays the mechanical one: it leaves instantly
+     and stops dead, which is right for a lamp, a marker, a state flip.
+
+     `--ease-out` is the entrance curve — an exponential-out that covers most
+     of the distance early and then takes its time arriving. It is what makes
+     a reveal read as settling into place rather than sliding to a halt, and
+     it is the difference between "animated" and "smooth".
+
+     `--ease-soft` is for hovers and toggles, symmetric and unhurried, so
+     pointing at something does not feel like triggering it.                 */
+
+  --dur: 240ms;
+  --dur-slow: 780ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur: 0.01ms;
+    --dur-slow: 0.01ms;
+  }
+}

@@ -1,0 +1,466 @@
+/* ==========================================================================
+   MP4/4 — base layer
+   Reset + element defaults for the revamped surface only.
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+
+  /* Scroll anchoring off, and this is load-bearing rather than cosmetic.
+     Anchoring nudges scrollTop whenever content resizes above the viewport,
+     and any such nudge CANCELS an in-flight smooth scroll. Measured: every nav
+     link and every command-bar jump died partway — a 9,460px target stopping
+     dead at 6,566, and often at 0. The page is a scroll-driven render with
+     lazy screenshots, so resizes above the fold are routine; keeping anchoring
+     would mean navigation that works only sometimes. */
+  overflow-anchor: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--c-black);
+  color: var(--c-white);
+  font-family: var(--f-body);
+  font-size: var(--t-base);
+  /* 450, not 400. Over a moving render, hairline body text is the first thing
+     to lose legibility — a little more weight is worth more than any amount of
+     dimming behind it. */
+  font-weight: 450;
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  /* A tight halo on the glyphs themselves. Belt and braces with the blur
+     behind: if backdrop-filter is unsupported or still compositing, the type
+     is still readable over a bright bodywork panel. */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+  font-family: var(--f-display);
+  /* Rajdhani tops out at 700. */
+  font-weight: 700;
+  /* Upright, normal width. Bold uppercase and nothing else — the F1 reading
+     comes from the car, the red and the layout, not from the letterforms. */
+  font-stretch: calc(var(--w-display) * 1%);
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+
+p,
+li,
+dd,
+dt {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+p {
+  max-width: var(--measure);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+/* The UA stylesheet implements `hidden` as `display: none`, which means any
+   class setting `display` silently defeats it. That is a whole category of
+   invisible bug — a "hidden" full-screen panel that is in fact covering the
+   page. Make the attribute win. */
+[hidden] {
+  display: none !important;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Unconditional — must never be nested inside a reduced-motion query, which
+   is the bug in the current index.css that leaves reduced-motion keyboard
+   users with no focus indicator at all. */
+:focus-visible {
+  outline: var(--b-heavy) solid var(--c-rosso);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--c-rosso);
+  color: var(--c-white);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--c-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--c-rosso);
+}
+
+/* Small uppercase labels carry weight 500 sitewide. At 13px, regular weight in
+   grey disappears against a moving render — this is the single cheapest
+   legibility win available and it applies everywhere at once. */
+[class*='label'],
+[class*='Label'],
+[class*='tag'],
+[class*='meta'],
+[class*='when'],
+[class*='venue'],
+[class*='period'] {
+  font-weight: 500;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ----------------------------------------------------------------- columns
+   Content takes one side of the frame and the car takes the other. The car is
+   never covered — it shrinks and slides across (see three/dock.js).
+
+   The widths and insets below are uneven on purpose. Strict alternation at a
+   constant width reads as a template within two scrolls; these are set by eye
+   so the rhythm is composed rather than metronomic. */
+
+[data-col='a'] { --col-w: 46%; --col-inset: 0%; }
+[data-col='b'] { --col-w: 54%; --col-inset: 3%; }
+[data-col='c'] { --col-w: 42%; --col-inset: 8%; }
+[data-col='d'] { --col-w: 50%; --col-inset: 0%; }
+/* Narrow and flush to the edge. For a section whose whole job is one block of
+   prose beside the render — it gives the car a genuine half of the frame to
+   fill instead of a sliver, which is what left the opposite side empty. */
+[data-col='e'] { --col-w: 38%; --col-inset: 0%; }
+
+/* Page gutter on the section itself, so a column can sit flush to the text
+   edge on any width without touching the viewport edge on an ultrawide. */
+[data-side] {
+  padding-inline: max(var(--s-6), calc((100% - var(--wrap)) / 2));
+}
+
+/* ------------------------------------------------------------------ rules
+   Every rule inside a column dissolves toward the car.
+
+   A rule that runs the column's width and stops dead draws a vertical line
+   down the page, and a stack of them draws a rectangle — which is what made
+   the content read as a slab laid over the render rather than part of the
+   same picture. Fading the far end means the type sits in the scene: the ink
+   runs out where the car begins instead of butting against it.
+
+   `--rule-*` flips with the side the content is on, so the solid end is
+   always the page edge and the soft end always faces the car. Consumed via
+   `border-image: var(--rule-hair) 1` on normal elements, and as a background
+   strip on table rows, where collapsed borders make border-image unreliable. */
+
+[data-side] {
+  --rule-hair: linear-gradient(
+    to right,
+    var(--c-line) 0%,
+    var(--c-line) 54%,
+    rgba(255, 255, 255, 0.04) 82%,
+    transparent 100%
+  );
+  --rule-heavy: linear-gradient(
+    to right,
+    var(--c-rosso) 0%,
+    var(--c-rosso) 58%,
+    rgba(200, 16, 46, 0.35) 84%,
+    transparent 100%
+  );
+}
+
+[data-side='right'] {
+  --rule-hair: linear-gradient(
+    to left,
+    var(--c-line) 0%,
+    var(--c-line) 54%,
+    rgba(255, 255, 255, 0.04) 82%,
+    transparent 100%
+  );
+  --rule-heavy: linear-gradient(
+    to left,
+    var(--c-rosso) 0%,
+    var(--c-rosso) 58%,
+    rgba(200, 16, 46, 0.35) 84%,
+    transparent 100%
+  );
+}
+
+/* ----------------------------------------------------------------- column
+   The column carries its own backing, and only its own.
+
+   A full-width plate put a black curtain across the car every time a section
+   arrived. This backs the text and nothing else.
+
+   The backing lives on a pseudo-element, not on `.col` itself, for two
+   reasons: it can bleed past the column box so the page-edge side has no
+   boundary at all, and it can be masked top and bottom without the mask also
+   fading the text — masking the element would fade its content too. */
+/* Full width by DEFAULT. The narrow column is now the exception, applied only
+   where a section is deliberately sharing the frame with the render.
+ *
+ * This inverts what was here before, and the inversion is the point. Reserving
+ * half the screen for the car in every section meant each one was either a
+ * shrunken car competing with the text or a black void beside it — the two
+ * failures we have been alternating between for hours. A section is now one
+ * thing or the other: the car owns the frame in the gaps, and the text owns it
+ * in the sections. Nothing is reserved, so nothing is empty. */
+.col {
+  position: relative;
+  width: 100%;
+  /* Centred, and held to a readable measure. Full width does not mean text
+     stretched across 1280px — it means nothing is reserved beside it. Skills
+     is the best-composed section on the page and this is why. */
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding: var(--s-7) var(--s-6);
+}
+
+[data-side] .col {
+  width: min(100%, var(--col-w, 48%));
+  padding: var(--s-7) var(--s-6);
+}
+
+/* No blur on the render.
+ *
+ * A backdrop blur here defocused the CAR, which is the subject — the exact
+ * opposite of a portrait, where the subject is sharp and the background is
+ * soft. The car now stays sharp everywhere, and readability is carried by a
+ * halo on the letterforms plus a light dimming that reads as light falling
+ * off rather than as a panel laid on top.
+ *
+ * Brightness only, no blur: the shape and detail of the bodywork survive
+ * intact, it simply sits in shadow behind the words. */
+.col::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  -webkit-backdrop-filter: brightness(0.55) saturate(1.15);
+  backdrop-filter: brightness(0.55) saturate(1.15);
+  /* Taller than the text so the vertical fade happens in the margin rather
+     than washing out the first and last lines. */
+  top: calc(var(--s-8) * -1);
+  bottom: calc(var(--s-8) * -1);
+  pointer-events: none;
+
+  /* No horizontal edges. Without this the plate's top and bottom show as two
+     straight lines across the car — the other half of the slab effect. */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 14%,
+    #000 86%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 14%,
+    #000 86%,
+    transparent 100%
+  );
+}
+
+/* Bleeds a full column-width past the page-edge side — body has
+   `overflow-x: hidden`, so the overhang costs nothing and guarantees that
+   edge never appears. */
+/* Full width: the backing spans the measure and fades at both ends, so the
+   car is sharp either side of the text and soft behind it. */
+.col::before {
+  left: -6%;
+  right: -6%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(5, 5, 5, 0.30) 8%,
+    rgba(5, 5, 5, 0.34) 50%,
+    rgba(5, 5, 5, 0.30) 92%,
+    transparent 100%
+  );
+}
+
+[data-side='left'] .col::before {
+  left: -100%;
+  right: 0;
+  background: linear-gradient(
+    to right,
+    rgba(5, 5, 5, 0.42) 0%,
+    rgba(5, 5, 5, 0.38) 70%,
+    rgba(5, 5, 5, 0.28) 82%,
+    rgba(5, 5, 5, 0.14) 93%,
+    transparent 100%
+  );
+}
+
+[data-side='right'] .col::before {
+  right: -100%;
+  left: 0;
+  background: linear-gradient(
+    to left,
+    rgba(5, 5, 5, 0.42) 0%,
+    rgba(5, 5, 5, 0.38) 70%,
+    rgba(5, 5, 5, 0.28) 82%,
+    rgba(5, 5, 5, 0.14) 93%,
+    transparent 100%
+  );
+}
+
+[data-side='left'] .col {
+  margin-left: var(--col-inset);
+  margin-right: auto;
+}
+
+[data-side='right'] .col {
+  margin-left: auto;
+  margin-right: var(--col-inset);
+}
+
+/* No room to sit beside anything on a phone. The column goes full width and
+   the car parks small in a corner for the whole page instead. */
+@media (max-width: 900px) {
+  .col {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  [data-side] {
+    padding-inline: var(--s-4);
+  }
+}
+
+/* [data-plate] removed. It painted a full-width backdrop that covered the car
+   whenever a section arrived — the exact "black thing in front" problem. The
+   column's own gradient does the job for the text and leaves the rest clear. */
+
+/* ---------------------------------------------------------------- reveal
+   Driven by useReveal, which only flips the data attribute. Transform and
+   opacity only, so the whole thing stays on the compositor.
+
+   The clip-path wipe and the rise run together: the wipe gives the F1
+   broadcast-graphic snap, the rise stops it feeling like a blind opening. */
+
+[data-reveal] {
+  opacity: 0;
+  /* Further, and with a touch of scale. 14px reads as a nudge; 28px plus a
+     1.5% scale reads as the block arriving from somewhere. The scale is the
+     part that makes it feel like depth rather than a slide. */
+  transform: translate3d(0, 28px, 0) scale(0.985);
+  transition:
+    opacity var(--dur-slow) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
+}
+
+[data-reveal='in'] {
+  opacity: 1;
+  transform: none;
+}
+
+/* The section heading, revealed from behind its own edge.
+   No wrapper span and no split text: an inset clip-path with the text rising
+   inside it gives the same "pushed up from under a mask" move that needs a
+   nested element everywhere else, and it degrades to simply being visible if
+   clip-path is unsupported. Negative insets top and bottom so descenders and
+   accents are never shaved. */
+[data-reveal] h2 {
+  clip-path: inset(0 0 105% 0);
+  transform: translate3d(0, 0.32em, 0);
+  transition:
+    clip-path 900ms var(--ease-out),
+    transform 900ms var(--ease-out);
+}
+
+[data-reveal='in'] h2 {
+  clip-path: inset(-25% 0 -25% 0);
+  transform: none;
+}
+
+/* Stagger children of a revealed block.
+   Eight steps now, not six, and the increment is 55ms rather than 60 — a
+   longer cascade that still finishes sooner, because the steps overlap more.
+   The blur is the current idiom and it is kept small and kept here: it is the
+   most expensive property in this file, and a WebGL canvas is compositing
+   behind all of it, so it goes on small elements only and never on a section. */
+[data-reveal] [data-step] {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  filter: blur(6px);
+  transition:
+    opacity 620ms var(--ease-out),
+    transform 620ms var(--ease-out),
+    filter 520ms var(--ease-out);
+}
+
+[data-reveal='in'] [data-step] {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+}
+
+[data-reveal='in'] [data-step='1'] { transition-delay: 55ms; }
+[data-reveal='in'] [data-step='2'] { transition-delay: 110ms; }
+[data-reveal='in'] [data-step='3'] { transition-delay: 165ms; }
+[data-reveal='in'] [data-step='4'] { transition-delay: 220ms; }
+[data-reveal='in'] [data-step='5'] { transition-delay: 275ms; }
+[data-reveal='in'] [data-step='6'] { transition-delay: 330ms; }
+[data-reveal='in'] [data-step='7'] { transition-delay: 385ms; }
+[data-reveal='in'] [data-step='8'] { transition-delay: 440ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal] h2,
+  [data-reveal] [data-step] {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+    filter: none;
+    transition: none;
+  }
+}

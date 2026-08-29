@@ -1,0 +1,212 @@
+/* Nothing on the landing. A hamburger fades in once the page starts moving,
+ * and opens a full-screen sheet. No persistent bar — a strip across the top
+ * would clip the car at every scroll position, which is the same mistake the
+ * section plates made.
+ */
+
+/* Icon only, and big enough to be an obvious target. 52px square clears the
+   44px minimum comfortably. */
+.trigger {
+  position: fixed;
+  top: var(--s-4);
+  left: var(--s-5);
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  background: rgba(5, 5, 5, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--c-white);
+
+  /* Hidden until scrolled, and not focusable while hidden. */
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0, -8px, 0);
+  transition:
+    opacity 260ms var(--ease-soft),
+    transform 260ms var(--ease-soft),
+    visibility 0s linear 260ms,
+    background 240ms var(--ease-soft);
+}
+
+.in {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+
+.trigger:hover {
+  background: var(--c-rosso);
+}
+
+/* --- the bars ------------------------------------------------------------ */
+
+.bars {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 26px;
+  height: 18px;
+}
+
+.bars i {
+  display: block;
+  height: 2.5px;
+  width: 100%;
+  background: currentColor;
+  transition: transform 220ms var(--ease-soft), opacity 240ms var(--ease-soft);
+}
+
+/* 7.75px = half the 18px span minus half a bar, so the two strokes cross
+   exactly on centre rather than near it. */
+.barsX i:nth-child(1) {
+  transform: translateY(7.75px) rotate(45deg);
+}
+
+.barsX i:nth-child(2) {
+  opacity: 0;
+}
+
+.barsX i:nth-child(3) {
+  transform: translateY(-7.75px) rotate(-45deg);
+}
+
+/* --- the sheet ------------------------------------------------------------ */
+
+/* display:none by default, NOT the `hidden` attribute alone.
+   `hidden` is implemented as `display: none` in the UA stylesheet, so any
+   class that sets `display` beats it — this panel was declaring
+   `display: flex` and therefore covering the entire page permanently at 98%
+   black, which reads exactly like the site failing to load. */
+.sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  display: none;
+  flex-direction: column;
+  /* `safe` matters. Plain `center` overflows equally in both directions, and
+     the overflowing top is unreachable by scrolling — which is why HOME was
+     sliced off above the fold with no way to get to it. `safe` falls back to
+     flex-start the moment the content is taller than the sheet. */
+  justify-content: safe center;
+  /* Top padding clears the fixed trigger so the first item cannot sit under
+     the button. */
+  padding:
+    calc(var(--s-4) + 52px + var(--s-5))
+    max(var(--s-6), calc((100% - var(--wrap)) / 2))
+    var(--s-7);
+  background: rgba(4, 4, 5, 0.985);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.sheetOpen {
+  display: flex;
+}
+
+/* Ten items have to fit without scrolling, so the type is capped against the
+   viewport HEIGHT as well as its width — sizing on vw alone is what let the
+   list run off the bottom of a short window. Spacing is a gap on the list
+   rather than padding on each link, so the airiness scales with the type. */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.35rem, 1.1vh, 0.85rem);
+}
+
+.list li {
+  overflow: hidden;
+}
+
+.list a {
+  display: block;
+  font-family: var(--f-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: clamp(1.15rem, min(3.6vw, 4.5vh), 2.75rem);
+  line-height: 1.06;
+  /* "Research Papers" is the only two-word stop; letting it wrap added a
+     whole line and pushed the list over the fold. */
+  white-space: nowrap;
+  color: var(--c-white);
+  transition: color 240ms var(--ease-soft), transform 240ms var(--ease-soft);
+
+  /* Each line lifts in on its own beat when the sheet opens. */
+  transform: translate3d(0, 105%, 0);
+}
+
+.sheetOpen .list a {
+  transform: none;
+  transition:
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--i) * 34ms),
+    color 240ms var(--ease-soft);
+}
+
+.list a:hover {
+  color: var(--c-rosso-text);
+  transform: translate3d(14px, 0, 0);
+}
+
+/* Where you already are. Marked rather than made to look clickable. */
+.on {
+  color: var(--c-rosso-text) !important;
+}
+
+.on::before {
+  content: '';
+  display: inline-block;
+  width: 0.42em;
+  height: 0.1em;
+  background: var(--c-rosso);
+  vertical-align: middle;
+  margin-right: 0.4em;
+}
+
+/* --- footer --------------------------------------------------------------- */
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-5);
+  margin-top: clamp(var(--s-5), 4vh, var(--s-8));
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--c-line);
+}
+
+.foot a {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-grey-2);
+  transition: color 240ms var(--ease-soft);
+}
+
+.foot a:hover {
+  color: var(--c-white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .list a,
+  .sheetOpen .list a {
+    transform: none;
+    transition: color 160ms linear;
+  }
+}
+
+@media (max-width: 760px) {
+  .trigger {
+    top: var(--s-3);
+    left: var(--s-4);
+  }
+
+  .sheet {
+    padding:
+      calc(var(--s-3) + 52px + var(--s-4))
+      var(--s-4)
+      var(--s-6);
+  }
+}

@@ -1,0 +1,148 @@
+/* The enquiry form.
+ *
+ * Underlines, not boxes — the same treatment as the rest of the site since the
+ * bordered chips came out. A form made of rectangles would be the one boxed
+ * thing left on the page.
+ */
+
+.form {
+  margin-top: var(--s-7);
+  padding-top: var(--s-5);
+  border-top: var(--b-heavy) solid transparent;
+  border-image: var(--rule-heavy) 1;
+}
+
+.title {
+  font-size: clamp(1.15rem, 2.6vw, 1.6rem);
+  color: var(--c-white);
+  margin: 0 0 var(--s-5);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--s-5) var(--s-6);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+  min-width: 0;
+}
+
+.wide {
+  margin-top: var(--s-5);
+}
+
+.label {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--c-rosso-text);
+}
+
+.label i {
+  font-style: normal;
+  color: var(--c-grey-2);
+  letter-spacing: 0.14em;
+}
+
+.input {
+  font: inherit;
+  font-size: 1.0625rem;
+  color: var(--c-white);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.18);
+  padding: 0.45em 0;
+  transition: border-color 240ms var(--ease-soft);
+  /* Without this a select inherits the OS chrome and looks pasted in. */
+  appearance: none;
+  border-radius: 0;
+}
+
+.input::placeholder {
+  color: var(--c-grey-2);
+}
+
+.input:focus {
+  outline: none;
+  border-bottom-color: var(--c-rosso);
+}
+
+/* The native dropdown list is drawn by the OS and cannot be styled, so it is
+   given a dark colour-scheme rather than left as white-on-white. */
+select.input {
+  color-scheme: dark;
+  cursor: pointer;
+}
+
+.area {
+  resize: vertical;
+  line-height: 1.5;
+  min-height: 4.5em;
+}
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-4) var(--s-6);
+  margin-top: var(--s-6);
+}
+
+/* Translucent, so the render carries on behind the one solid block left in
+   the section. */
+.send {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-white);
+  background: rgba(200, 16, 46, 0.82);
+  backdrop-filter: blur(2px);
+  padding: 0.75em 1.6em;
+  min-height: 48px;
+  transition: background 240ms var(--ease-soft), transform 240ms var(--ease-soft);
+}
+
+.send:hover:not(:disabled) {
+  background: var(--c-rosso-lo);
+  transform: translateY(-2px);
+}
+
+.send:disabled {
+  background: transparent;
+  color: var(--c-grey-2);
+  border-bottom: 2px solid var(--c-line);
+  padding: 0.5em 0;
+  cursor: default;
+}
+
+.aside {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  color: var(--c-grey-2);
+  margin: 0;
+  max-width: 42ch;
+}
+
+.aside a {
+  color: var(--c-white);
+  border-bottom: 1px solid var(--c-rosso);
+}
+
+@media (max-width: 760px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .send {
+    width: 100%;
+  }
+}

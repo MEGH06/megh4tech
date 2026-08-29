@@ -1,0 +1,288 @@
+.section {
+  padding: var(--s-9) 0 var(--s-8);
+}
+
+.wrap {
+  max-width: var(--wrap);
+}
+
+.head {
+  border-bottom: var(--b-heavy) solid var(--c-rosso);
+  border-image: var(--rule-heavy) 1;
+  padding-bottom: var(--s-3);
+  margin-bottom: var(--s-5);
+}
+
+.title {
+  font-size: var(--t-lg);
+  margin: 0;
+}
+
+.lede {
+  font-size: var(--t-md);
+  color: var(--c-grey);
+  line-height: var(--lh-snug);
+  margin-bottom: var(--s-6);
+  max-width: 40ch;
+}
+
+/* --- routes --------------------------------------------------------------
+   A pit board is a handful of large legible facts, so these are set at size
+   rather than as a caption list. */
+
+.routes {
+  border-top: var(--b-hair) solid var(--c-line);
+  border-image: var(--rule-hair) 1;
+  margin-bottom: var(--s-7);
+}
+
+.routes li {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: var(--s-4);
+  align-items: baseline;
+  padding: var(--s-3) 0;
+  border-bottom: var(--b-hair) solid var(--c-line);
+  border-image: var(--rule-hair) 1;
+}
+
+.k {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-grey-2);
+}
+
+.v {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-stretch: calc(var(--w-display) * 1%);
+  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--c-white);
+  transition: color var(--dur) var(--ease-soft);
+  word-break: break-word;
+}
+
+a.v:hover {
+  color: var(--c-rosso-text);
+}
+
+.sub {
+  font-family: var(--f-mono);
+  font-weight: 400;
+  font-stretch: 100%;
+  font-style: normal;
+  font-size: var(--t-xs);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--c-grey-2);
+  margin: 0 0 var(--s-3);
+}
+
+.services {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45em 1.35em;
+  margin-bottom: var(--s-7);
+}
+
+.services li {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-white);
+  /* Unboxed; the removed padding lives in the parent's gap. */
+  padding: 0;
+}
+
+
+
+
+.resume,
+.colophon {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-grey-2);
+  margin: 0 0 var(--s-3);
+}
+
+.colophon {
+  border-top: var(--b-hair) solid var(--c-line);
+  border-image: var(--rule-hair) 1;
+  padding-top: var(--s-4);
+  margin-bottom: 0;
+}
+
+
+/* --- profiles --------------------------------------------------------------
+   Not footer links. GitHub and LinkedIn are the two things a client checks
+   before replying, so they get the size of a decision, with the handle visible
+   so a visitor can see it is a real account without leaving the page. */
+
+.socials {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  /* Rows size to content. Without this the links inherit a stretching
+     parent's height and render hundreds of pixels tall — an enormous
+     invisible hit area, which is worse than a small one. */
+  align-content: start;
+  align-items: start;
+  gap: var(--s-3) var(--s-5);
+  margin: var(--s-6) 0;
+}
+
+.social {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-3) 0;
+  border-bottom: 2px solid var(--c-line);
+  transition: border-color 240ms var(--ease-soft);
+}
+
+.social:hover {
+  border-bottom-color: var(--c-rosso);
+}
+
+.socialIcon {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  color: var(--c-grey);
+  transition: color 240ms var(--ease-soft), transform 240ms var(--ease-soft);
+}
+
+.socialIcon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.social:hover .socialIcon {
+  color: var(--c-rosso-text);
+  transform: translateY(-2px);
+}
+
+.socialText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.15;
+}
+
+.socialName {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--c-white);
+}
+
+.socialHandle {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  color: var(--c-grey-2);
+}
+
+.socialGo {
+  margin-left: auto;
+  font-size: 1rem;
+  color: var(--c-grey-2);
+  transition: color 240ms var(--ease-soft), transform 240ms var(--ease-soft);
+}
+
+.social:hover .socialGo {
+  color: var(--c-rosso-text);
+  transform: translate3d(3px, -3px, 0);
+}
+
+@media (max-width: 760px) {
+  /* Email and phone are the two links that matter most on a phone, and both
+     measured 26px tall. */
+  .v,
+  .social,
+  .socials a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .section {
+    padding: var(--s-8) 0 var(--s-7);
+  }
+
+  .routes li {
+    grid-template-columns: 1fr;
+    gap: var(--s-1);
+  }
+}
+
+
+/* --- full-width contact ---------------------------------------------------
+   Contact is now the whole frame, so it is laid out as one: a large opening
+   line, then the routes as a row of big targets rather than a stacked
+   key/value list squeezed into a column.
+
+   The embedded form is deliberately no longer the centrepiece. It is blocked
+   by Cloudflare Turnstile and shows a fallback, so what a visitor actually
+   sees is a message about a form that will not load — an apology where the
+   call to action should be. Email and phone work today and are what get
+   answered, so they lead. */
+
+.routes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: var(--s-5) var(--s-6);
+  margin: var(--s-6) 0 var(--s-7);
+}
+
+.routes li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+  padding-top: var(--s-3);
+  border-top: 2px solid transparent;
+  border-image: var(--rule-heavy) 1;
+}
+
+.k {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--c-rosso-text);
+}
+
+.v {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 2.4vw, 1.75rem);
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  color: var(--c-white);
+  transition: color 240ms var(--ease-soft);
+  word-break: break-word;
+}
+
+a.v:hover {
+  color: var(--c-rosso-text);
+}
+
+.lede {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 4vw, 2.75rem);
+  line-height: 1.12;
+  text-transform: uppercase;
+  color: var(--c-white);
+  max-width: 22ch;
+  margin: var(--s-5) 0 0;
+}

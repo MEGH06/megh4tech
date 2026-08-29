@@ -1,0 +1,151 @@
+/* Skills as a partner sheet.
+ *
+ * One ground, one ink, one size, centred rows. Uniformity is the whole effect
+ * — the poster reads as a single system, and the breadth is what lands. The
+ * previous version set the top tier at 5rem in Rosso, which read as shouting
+ * rather than ranking, so nothing is coloured or enlarged now.
+ */
+
+.section {
+  padding: var(--s-9) 0;
+  position: relative;
+}
+
+.sheet {
+  position: relative;
+  max-width: min(1120px, 94vw);
+  margin: 0 auto;
+  padding: 0 var(--s-5);
+  text-align: center;
+}
+
+/* No scrim. The car sits centred behind this section — in plan view its
+   painted decals name the same stack the list does — and a dark wash over it
+   killed exactly what makes the pairing work. The marks carry their own
+   legibility instead: see the text shadow on `.marks li` below, which costs
+   nothing and leaves the render untouched. */
+
+/* --- banner --------------------------------------------------------------- */
+
+.banner {
+  display: inline-block;
+  background: var(--c-rosso);
+  padding: 0.34em 1.1em 0.4em;
+  margin-bottom: var(--s-8);
+}
+
+.title {
+  font-size: clamp(1.7rem, 4.4vw, 3rem);
+  line-height: 1;
+  letter-spacing: 0.06em;
+  color: var(--c-white);
+  margin: 0;
+}
+
+/* --- groups ---------------------------------------------------------------
+   Every group is set identically. A client scanning for "can he do X" needs
+   to find X, not to be told which X Megh likes best. */
+
+.group {
+  padding: var(--s-5) 0 var(--s-6);
+}
+
+/* The category label sits on a hairline that fades at both ends, so the sheet
+   is divided without being boxed. */
+.groupLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  font-family: var(--f-mono);
+  font-weight: 400;
+  font-size: 0.6875rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  /* Rosso at 11px over a red car measured too low to read. White carries the
+     label; the rules either side keep it feeling like part of the sheet. */
+  color: var(--c-white);
+  margin: 0 0 var(--s-4);
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95);
+}
+
+.groupLabel::before,
+.groupLabel::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.13));
+}
+
+.groupLabel::after {
+  background: linear-gradient(to left, transparent, rgba(255, 255, 255, 0.13));
+}
+
+.marks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.4em 1.15em;
+  margin: 0 auto;
+  max-width: 62ch;
+}
+
+.marks li {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: clamp(1.05rem, 2vw, 1.5rem);
+  line-height: 1.12;
+  text-transform: uppercase;
+  letter-spacing: 0.014em;
+  color: var(--c-white);
+  white-space: nowrap;
+  transition: color 240ms var(--ease-soft);
+  /* Contrast that follows the letterforms instead of a panel behind them. A
+     tight dark halo lifts the type off the car wherever it happens to be
+     bright, and is invisible over the page ground. */
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.9),
+    0 0 14px rgba(0, 0, 0, 0.75);
+}
+
+.marks li:hover {
+  color: var(--c-rosso-text);
+}
+
+/* Soft skills are people, not tooling. Set in the body face at sentence case
+   so they read as a different kind of claim rather than more technology. */
+[data-group='soft'] .marks li,
+.group:last-child .marks li {
+  font-family: var(--f-body);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.005em;
+}
+
+@media (max-width: 760px) {
+  .section {
+    padding: var(--s-8) 0;
+  }
+
+  .sheet {
+    padding: 0 var(--s-4);
+  }
+
+  .group {
+    padding: var(--s-4) 0 var(--s-5);
+  }
+
+  .marks {
+    gap: 0.35em 0.85em;
+  }
+
+  .groupLabel {
+    gap: var(--s-3);
+    letter-spacing: 0.22em;
+  }
+
+  .section::before {
+    background-size: 54px 54px;
+  }
+}

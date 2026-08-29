@@ -22,3 +22,28 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# --- added during the rebuild -------------------------------------------
+# Raw model source. 119 MB of uncompressed GLBs that nothing loads — the site
+# serves the compressed copies in public/models (11 MB total). Git keeps
+# blobs forever, so committing these once bloats the repo permanently even if
+# they are deleted later. Keep them on disk, back them up outside git.
+/2000_ferrari_f2000.glb
+/2008_williams_fw30.glb
+/2018_ferrari_sf71h.glb
+/f1_2022_generic.glb
+/f1_steering_wheel_w11.glb
+
+# Build output and scratch
+build/
+review/
+
+# A partial older copy of this project with its own .git inside it. Adding it
+# would commit a broken gitlink, not the files.
+megh4tech/
+
+# Local agent tooling, not part of the site
+.claude/
+
+# Stray media
+*.m4a

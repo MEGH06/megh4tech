@@ -1,0 +1,242 @@
+/* The landing.
+ *
+ * Everything is anchored in the bottom-left corner and the rest of the frame
+ * is left to the car and the light. The empty space is the composition — a
+ * centred hero would fight the car for the middle and both would lose.
+ */
+
+.section {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  /* Transparent on purpose: the fixed CarStage sits behind the document and
+     this section is the first window onto it. */
+  background: transparent;
+  isolation: isolate;
+}
+
+/* --- layer 0: video + atmosphere -----------------------------------------
+   Both live inside .backdrop so they can be faded as a single surface. The
+   bottom edge is the join with the first car window, and anything opaque that
+   simply stops there draws a hard line across the page. */
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 52%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0, #000 52%, transparent 100%);
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  /* Was grayscale(1) brightness(0.36) — drained so hard the footage read as a
+     dark texture rather than a video, which is why it looked like nothing was
+     playing. Enough desaturation that red still leads, enough light to see. */
+  filter: grayscale(0.55) contrast(1.15) brightness(0.82);
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(to top, rgba(5, 5, 5, 0.55) 0%, rgba(5, 5, 5, 0.3) 52%, rgba(5, 5, 5, 0.78) 100%),
+    linear-gradient(to right, rgba(5, 5, 5, 0.88) 0%, transparent 46%),
+    radial-gradient(ellipse at 70% 40%, rgba(200, 16, 46, 0.2) 0%, transparent 62%);
+}
+
+/* One hard diagonal shaft of light across an otherwise near-black frame —
+   the strongest single device in the F1 Manager reference. Skewed on the
+   same rake the chevrons and the car use, so it belongs to one system. */
+.scrim::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  bottom: -30%;
+  left: 64%;
+  width: clamp(90px, 13vw, 220px);
+  transform: skewX(-16deg);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.12) 38%,
+    rgba(255, 255, 255, 0.04) 72%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+/* Halftone, as used across the Saudi GP boards. Very low contrast: it should
+   register as texture, never as pattern. */
+.scrim::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px);
+  background-size: 7px 7px;
+  mask-image: radial-gradient(ellipse 68% 58% at 78% 34%, #000 0%, transparent 72%);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* --- layer 2: the corner -------------------------------------------------- */
+
+.content {
+  position: relative;
+  isolation: isolate;
+  z-index: 3;
+  width: 100%;
+  padding-bottom: var(--s-8);
+}
+
+.wrap {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 var(--s-6);
+}
+
+/* A soft pool of dark under the corner only, so the name holds its contrast
+   without the whole lower half of the frame going opaque. */
+.content::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 40%;
+  bottom: 0;
+  top: -40%;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse 90% 80% at 12% 92%,
+    rgba(5, 5, 5, 0.92) 0%,
+    rgba(5, 5, 5, 0.6) 42%,
+    transparent 76%
+  );
+  pointer-events: none;
+}
+
+.name {
+  font-size: clamp(3rem, 10vw, 8.5rem);
+  line-height: 0.82;
+  margin: 0;
+}
+
+.first,
+.last {
+  display: block;
+}
+
+.last {
+  color: var(--c-rosso-text);
+}
+
+/* --- role tags ------------------------------------------------------------ */
+
+.roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45em 1.35em;
+  margin: var(--s-5) 0 var(--s-4);
+}
+
+.roles li {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--c-white);
+  /* The three disciplines sit over the hero video, so they keep a backing —
+     but as a shadow on the glyphs rather than a blurred panel. Three frosted
+     rectangles across the landing were the first thing the eye hit, ahead of
+     the name. */
+  padding: 0;
+  text-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.95),
+    0 0 16px rgba(0, 0, 0, 0.8);
+}
+
+/* The first discipline is the one he leads with. */
+.roles li:first-child {
+  color: var(--c-white);
+  background: var(--c-rosso);
+  border-color: var(--c-rosso);
+}
+
+/* --- scroll cue ----------------------------------------------------------- */
+
+.scroll {
+  position: absolute;
+  right: var(--s-6);
+  bottom: var(--s-4);
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--c-grey-2);
+  transition: color var(--dur) var(--ease-soft);
+}
+
+.scroll:hover {
+  color: var(--c-white);
+}
+
+.arrow {
+  width: 1px;
+  height: 28px;
+  background: linear-gradient(to bottom, var(--c-rosso), transparent);
+}
+
+/* --- entrance -------------------------------------------------------------
+   Runs once on load. Same easing as every scroll reveal on the site, so the
+   landing does not feel like different software from the sections below. */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+  }
+}
+
+.name { animation: rise 720ms var(--ease-soft) both 240ms; }
+.roles { animation: rise 520ms var(--ease-soft) both 300ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .name,
+  .roles {
+    animation: none;
+  }
+}
+
+@media (max-width: 900px) {
+
+  .scrim {
+    background:
+      linear-gradient(to top, rgba(5, 5, 5, 0.6) 0%, rgba(5, 5, 5, 0.4) 56%, rgba(5, 5, 5, 0.8) 100%),
+      radial-gradient(ellipse at 70% 34%, rgba(200, 16, 46, 0.2) 0%, transparent 62%);
+  }
+}
+
+@media (max-width: 760px) {
+  .wrap {
+    padding: 0 var(--s-4);
+  }
+
+  .scroll {
+    right: var(--s-4);
+  }
+}

@@ -1,0 +1,15 @@
+/* Sections sit above the fixed canvas. Everything that carries text is opaque;
+ * only the CarWindow gaps let the car through. Stacking, not transparency —
+ * type over a moving 3D render is unreadable and cannot be made accessible.
+ */
+
+.flow {
+  position: relative;
+  z-index: 1;
+}
+
+/* The landing is the exception: it shows the video and manages its own
+   layering internally, so it stays transparent to the stage behind it. */
+.flow > :first-child {
+  background: transparent;
+}

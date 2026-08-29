@@ -1,0 +1,103 @@
+.section {
+  padding: var(--s-9) 0;
+}
+
+.wrap {
+  max-width: var(--wrap);
+}
+
+.head {
+  border-bottom: var(--b-heavy) solid var(--c-rosso);
+  border-image: var(--rule-heavy) 1;
+  padding-bottom: var(--s-3);
+  margin-bottom: var(--s-6);
+}
+
+.title {
+  font-size: var(--t-lg);
+  margin: 0;
+}
+
+.list {
+  border-top: var(--b-hair) solid var(--c-line);
+  border-image: var(--rule-hair) 1;
+}
+
+.item {
+  padding: var(--s-5) 0;
+  border-bottom: var(--b-hair) solid var(--c-line);
+  border-image: var(--rule-hair) 1;
+}
+
+.top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--s-2);
+}
+
+.name {
+  font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+  margin: 0;
+  color: var(--c-white);
+  flex: 1 1 20ch;
+}
+
+/* Giallo, not red: this is live state, and red is already carrying structure
+   everywhere else on the page. */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-black);
+  background: var(--c-giallo);
+  padding: 0.3em 0.7em;
+  white-space: nowrap;
+}
+
+.where {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-rosso-text);
+  margin: 0 0 var(--s-3);
+}
+
+.blurb {
+  color: var(--c-grey);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin: 0 0 var(--s-4);
+  max-width: 60ch;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45em 1.35em;
+}
+
+.tags li {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-grey);
+  /* No box. Bordered pills read as a grid of blocks laid over the page;
+     the spacing that separated them is kept and moved into the gap, so
+     the rhythm is unchanged and only the outline is gone. */
+  padding: 0;
+}
+
+@media (max-width: 760px) {
+  .section {
+    padding: var(--s-8) 0;
+  }
+}

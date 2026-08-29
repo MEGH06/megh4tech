@@ -1,0 +1,169 @@
+.section {
+  /* transparent: the .col gradient backs the text, nothing backs the car */
+  padding: var(--s-9) 0;
+}
+
+.wrap {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 var(--s-6);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  border-bottom: var(--b-heavy) solid var(--c-rosso);
+  border-image: var(--rule-heavy) 1;
+  padding-bottom: var(--s-3);
+  margin-bottom: var(--s-6);
+}
+
+.tag {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--c-rosso-text);
+}
+
+.title {
+  font-size: var(--t-lg);
+  margin: 0;
+}
+
+/* --- roles --------------------------------------------------------------- */
+
+.roles {
+  border-top: var(--b-hair) solid var(--c-line);
+  border-image: var(--rule-hair) 1;
+  margin-bottom: var(--s-8);
+}
+
+/* Two columns, not three. The third held an invented "Running" status pill
+   that has been removed — leaving the track behind would strand 110px of
+   empty gutter on every row. */
+.role {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: var(--s-5);
+  align-items: start;
+  padding: var(--s-5) 0;
+  border-bottom: var(--b-hair) solid var(--c-line);
+  border-image: var(--rule-hair) 1;
+  transition: background var(--dur) var(--ease-soft);
+}
+
+.role:hover {
+  background: rgba(16, 16, 16, 0.45);
+}
+
+.kind {
+  font-family: var(--f-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 1.0625rem;
+  color: var(--c-rosso-text);
+  padding-top: 0.15em;
+}
+
+.body {
+  min-width: 0;
+}
+
+.roleTitle {
+  font-size: clamp(1.15rem, 2.6vw, 1.6rem);
+  line-height: 1.05;
+  margin: 0 0 var(--s-3);
+  color: var(--c-white);
+}
+
+.org {
+  color: var(--c-grey);
+  font-weight: 700;
+}
+
+.period {
+  display: block;
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-rosso-text);
+  margin-bottom: var(--s-3);
+}
+
+.detail {
+  color: var(--c-grey);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  max-width: 58ch;
+  margin: 0;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45em 1.35em;
+  margin-top: var(--s-4);
+}
+
+.skills li {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-grey);
+  /* No box. Bordered pills read as a grid of blocks laid over the page;
+     the spacing that separated them is kept and moved into the gap, so
+     the rhythm is unchanged and only the outline is gone. */
+  padding: 0;
+}
+
+/* --- photograph ----------------------------------------------------------
+   Only rendered once a real photograph exists (see Paddock.jsx). Documentary
+   and unstyled: hard corners, no card, no drop shadow. The dashed empty-state
+   box that used to stand in for it has been removed — a placeholder asking
+   for a file is a note to self, not something a visitor should see. */
+
+.figure {
+  margin: 0;
+}
+
+.photo {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  border: var(--b-heavy) solid var(--c-rosso);
+}
+
+
+
+
+.caption {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-grey-2);
+  margin-top: var(--s-3);
+}
+
+@media (max-width: 860px) {
+  .role {
+    grid-template-columns: 1fr;
+    gap: var(--s-3);
+  }
+}
+
+@media (max-width: 760px) {
+  .section {
+    padding: var(--s-8) 0;
+  }
+
+  .wrap {
+    padding: 0 var(--s-4);
+  }
+}

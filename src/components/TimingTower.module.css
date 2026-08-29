@@ -1,0 +1,381 @@
+.section {
+  padding: var(--s-9) 0;
+}
+
+.wrap {
+  max-width: var(--wrap);
+}
+
+.head {
+  border-bottom: var(--b-heavy) solid var(--c-rosso);
+  border-image: var(--rule-heavy) 1;
+  padding-bottom: var(--s-3);
+  margin-bottom: var(--s-6);
+}
+
+.title {
+  font-size: var(--t-lg);
+  margin: 0;
+}
+
+.rows {
+  border-top: var(--b-hair) solid var(--c-line);
+  border-image: var(--rule-hair) 1;
+}
+
+.rows > li {
+  /* One column. The 64px track held the P1/P2 position marker, which was F1
+     costume rather than information — the list is already in order, so the
+     number restated the row's own position. Removing the element without
+     removing its track left the card body in a 64px column, wrapping the
+     copy two words to a line. */
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: var(--s-5) 0;
+  align-items: start;
+  border-bottom: var(--b-hair) solid var(--c-line);
+  border-image: var(--rule-hair) 1;
+  transition: background var(--dur) var(--ease-soft);
+}
+
+.rows > li:hover {
+  background: rgba(20, 22, 26, 0.6);
+}
+
+/* Front row. The featured builds carry the red on the heading, and that is
+   the whole marker now.
+   The red bar down the left edge went with it. The same device was on the
+   search chip, the menu button, the bio paragraph, the win rows and this —
+   five unrelated things wearing one decoration, which is what makes a page
+   read as generated rather than designed. It survives only where it carries
+   state a reader cannot get from the words: a win in the results list, and
+   the card the command bar just jumped to. */
+.front .name {
+  color: var(--c-rosso-text);
+}
+
+.body {
+  min-width: 0;
+}
+
+.headRow {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5em var(--s-4);
+  margin-bottom: var(--s-3);
+}
+
+.name {
+  font-size: clamp(1.2rem, 2.6vw, 1.75rem);
+  margin: 0;
+  color: var(--c-white);
+}
+
+/* What field the work is in. A client scanning for "has he done anything like
+   mine" is looking for this, not for the stack. */
+.field {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-rosso-text);
+}
+
+/* --- the result ----------------------------------------------------------
+   The only line on a project card that argues for him rather than describing
+   it, so it stays visible collapsed and carries the colour. A measurement or
+   nothing — never an adjective. */
+
+.result {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--c-white);
+  max-width: 62ch;
+  margin: 0 0 var(--s-4);
+  padding-left: var(--s-4);
+  border-left: 2px solid var(--c-rosso);
+}
+
+.resultKey {
+  display: block;
+  font-family: var(--f-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--c-rosso-text);
+  margin-bottom: 0.3em;
+}
+
+/* --- the reasoning, on demand --------------------------------------------- */
+
+.more {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-grey);
+  padding: 0 0 0.15em;
+  border-bottom: 1px solid var(--c-line);
+  margin-bottom: var(--s-4);
+  transition: color 240ms var(--ease-soft), border-color 240ms var(--ease-soft);
+}
+
+.more:hover {
+  color: var(--c-white);
+  border-bottom-color: var(--c-rosso);
+}
+
+.study {
+  display: grid;
+  grid-template-columns: 108px 1fr;
+  gap: var(--s-3) var(--s-4);
+  margin: 0 0 var(--s-4);
+  padding-bottom: var(--s-2);
+}
+
+.study dt {
+  font-family: var(--f-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-rosso-text);
+  padding-top: 0.3em;
+}
+
+.study dd {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--c-grey);
+  max-width: 58ch;
+}
+
+.blurb {
+  color: var(--c-grey);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  margin: 0 0 var(--s-4);
+  max-width: 58ch;
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45em 1.35em;
+  margin-bottom: var(--s-4);
+}
+
+.stack li {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-grey);
+  /* No box. Bordered pills read as a grid of blocks laid over the page;
+     the spacing that separated them is kept and moved into the gap, so
+     the rhythm is unchanged and only the outline is gone. */
+  padding: 0;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  align-items: center;
+}
+
+.link {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-white);
+  /* Text links, not buttons. A filled red LIVE block and an outlined SOURCE
+     block were the loudest things in the section and pulled the eye off the
+     project names. The underline keeps the affordance; the weight and colour
+     keep LIVE as the primary action. */
+  padding: 0.15em 0;
+  border-bottom: 2px solid var(--c-line);
+  transition: color var(--dur) var(--ease-soft), border-color var(--dur) var(--ease-soft);
+}
+
+.link:hover {
+  color: var(--c-rosso-text);
+  border-bottom-color: var(--c-rosso);
+}
+
+.live {
+  color: var(--c-rosso-text);
+  border-bottom-color: var(--c-rosso);
+}
+
+.live:hover {
+  color: var(--c-white);
+  border-bottom-color: var(--c-white);
+}
+
+@media (max-width: 760px) {
+  /* 44px minimum. Removing the boxes from these links also removed their hit
+     area — Source and Live measured 48x23 and 32x23 on a phone, which is a
+     miss waiting to happen. The padding is invisible; only the target grows. */
+  /* 9px is below the readable floor on a phone. */
+  .resultKey,
+  .study dt {
+    font-size: 0.6875rem;
+  }
+
+  .link,
+  .more {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .links {
+    gap: var(--s-5);
+  }
+
+  .study {
+    grid-template-columns: 1fr;
+    gap: 0.25em var(--s-3);
+  }
+
+  .study dt {
+    padding-top: var(--s-2);
+  }
+
+  .section {
+    padding: var(--s-8) 0;
+  }
+
+  .rows > li {
+    grid-template-columns: 46px 1fr;
+    gap: var(--s-3);
+  }
+}
+
+
+/* --- screenshot -----------------------------------------------------------
+   The single most persuasive thing on a project card, and the one thing the
+   section had none of. Cropped to a consistent ratio so eight of them read as
+   a set rather than eight different shapes. */
+
+/* Beside the copy, not above it.
+   Full-bleed, a 16:10 screenshot is 780px tall on this column — it filled the
+   viewport on its own and the writing, which is what actually argues the case,
+   fell below the fold. A thumbnail is enough to prove the thing exists and is
+   deployed; the link does the rest. */
+.rows > li[data-shot] {
+  /* Copy left, screenshot right — not the other way round. With the image
+     first, the cards that have one indented their heading by 300px and the
+     ones that do not started at the margin, so the left edge of the list
+     zig-zagged down the section. Every card now begins on the same line and
+     the screenshot is an addition on the right, which is what it is: five of
+     nine projects have a deployed interface worth showing. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
+  gap: var(--s-5);
+}
+
+.rows > li[data-shot] .body {
+  grid-area: 1 / 1;
+}
+
+.rows > li[data-shot] .shotWrap {
+  grid-area: 1 / 2;
+}
+
+.shotWrap {
+  display: block;
+  overflow: hidden;
+  border-top: 2px solid var(--c-rosso);
+}
+
+@media (max-width: 760px) {
+  .rows > li[data-shot] {
+    grid-template-columns: 1fr;
+    gap: var(--s-4);
+  }
+
+  /* Stacked, the screenshot leads — on a phone it is the fastest way to see
+     that the thing is real before reading a word of it. */
+  .rows > li[data-shot] .shotWrap { grid-area: 1 / 1; }
+  .rows > li[data-shot] .body { grid-area: 2 / 1; }
+}
+
+.shot {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  /* Slightly held back at rest so the type still leads, full colour on hover
+     — the card is read first and looked at second. */
+  filter: saturate(0.82) brightness(0.9);
+  transform: scale(1.001);
+  transition: transform 620ms var(--ease-out), filter 360ms var(--ease-out);
+}
+
+.shotWrap:hover .shot {
+  filter: none;
+  transform: scale(1.035);
+}
+
+/* --- view all ------------------------------------------------------------- */
+
+.viewAll {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  margin-top: var(--s-6);
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-white);
+  padding: 0.6em 0;
+  border-bottom: 2px solid var(--c-rosso);
+  min-height: 48px;
+  transition: color 240ms var(--ease-soft), gap 240ms var(--ease-soft);
+}
+
+.viewAll:hover {
+  color: var(--c-rosso-text);
+  gap: 1em;
+}
+
+.viewAll::after {
+  content: "93";
+  font-size: 0.9em;
+}
+
+.viewAll[aria-expanded="true"]::after {
+  content: "91";
+}
+
+
+/* --- arrived from the command bar -----------------------------------------
+   Being scrolled to a section is not the same as being shown the card. This
+   marks the one you asked for, then lets go. */
+
+.rows > li[data-found] {
+  animation: found 2200ms var(--ease-soft);
+}
+
+@keyframes found {
+  0%, 70% {
+    box-shadow: inset 3px 0 0 var(--c-rosso), 0 0 0 1px rgba(200, 16, 46, 0.35);
+    background: rgba(200, 16, 46, 0.07);
+  }
+  100% {
+    box-shadow: none;
+    background: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rows > li[data-found] { animation: none; box-shadow: inset 3px 0 0 var(--c-rosso); }
+}

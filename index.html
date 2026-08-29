@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/curly.jpg" />
+  <!-- Was declared image/svg+xml while pointing at a .jpg. -->
+  <link rel="icon" type="image/jpeg" href="/curly.jpg" />
 
   <!-- Essential Mobile Responsiveness -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
@@ -40,10 +41,18 @@
   <link rel="canonical" href="https://huggingface.co/spaces/MEGH06/portfolio" />
 
   <!-- Theme Color for Mobile Browsers -->
-  <meta name="theme-color" content="#000000" />
-  <meta name="msapplication-TileColor" content="#000000" />
+  <meta name="theme-color" content="#050505" />
+  <meta name="msapplication-TileColor" content="#050505" />
 
-  <!-- Prevent Zoom on Input Focus (iOS) -->
+  <!-- The page renders near-black long before React mounts; without this the
+       browser paints a white flash first. -->
+  <style>
+    html, body { background: #050505; }
+  </style>
+
+  <!-- Standalone web-app hints. The apple-prefixed form alone is deprecated
+       and Chrome warns about it; the standard name has to be present too. -->
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 

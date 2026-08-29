@@ -1,0 +1,97 @@
+.section {
+  padding: var(--s-9) 0;
+}
+
+.wrap {
+  max-width: var(--wrap);
+}
+
+.head {
+  border-bottom: var(--b-heavy) solid var(--c-rosso);
+  border-image: var(--rule-heavy) 1;
+  padding-bottom: var(--s-3);
+  margin-bottom: var(--s-6);
+}
+
+.title {
+  font-size: var(--t-lg);
+  margin: 0;
+}
+
+/* The one place on the site set as prose rather than as data. Larger and
+   looser than the tables so it reads as someone talking, not as a readout. */
+/* The tagline, set as a lede. Larger and white so it carries the top of the
+   section, with the body paragraphs stepping down to grey underneath. */
+.lede {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: clamp(1.25rem, 2.3vw, 1.75rem);
+  line-height: 1.28;
+  letter-spacing: 0.002em;
+  color: var(--c-white);
+  max-width: 26ch;
+  margin-bottom: var(--s-5);
+}
+
+.para {
+  font-size: var(--t-md);
+  line-height: 1.62;
+  color: var(--c-grey);
+  max-width: 52ch;
+  margin-bottom: var(--s-4);
+}
+
+/* Not :first-of-type — the lede is now the first <p> in this block, so that
+   selector would quietly stop matching the first body paragraph. The lede
+   carries the emphasis instead, and the body stays uniformly grey. */
+.para:last-of-type {
+  margin-bottom: 0;
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-5) var(--s-7);
+  border-top: var(--b-heavy) solid var(--c-rosso);
+  border-image: var(--rule-heavy) 1;
+  padding-top: var(--s-4);
+  margin-top: var(--s-6);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.statValue {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-stretch: calc(var(--w-display-max) * 1%);
+  font-size: clamp(1.6rem, 3.6vw, 2.5rem);
+  line-height: 0.9;
+  color: var(--c-white);
+  font-variant-numeric: tabular-nums;
+}
+
+.stat:first-child .statValue {
+  color: var(--c-rosso-text);
+}
+
+.statLabel {
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--c-grey-2);
+  margin-top: var(--s-2);
+}
+
+@media (max-width: 760px) {
+  .section {
+    padding: var(--s-8) 0;
+  }
+
+  .para {
+    font-size: var(--t-base);
+  }
+}
