@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { createLayout } from 'animejs/layout';
+import { asset } from '../lib/assets';
 import useReveal from '../hooks/useReveal';
 import useDockZone from '../hooks/useDockZone';
 import { PROJECTS } from '../data/projects';
@@ -121,7 +122,7 @@ function Project({ p, step, transition }) {
         >
           <img
             className={styles.shot}
-            src={p.shot}
+            src={asset(p.shot)}
             alt=""
             loading="lazy"
             decoding="async"

@@ -47,3 +47,8 @@ megh4tech/
 
 # Stray media
 *.m4a
+
+# Secrets. Never commit these — this repo is public.
+.env
+.env.*
+!.env.example

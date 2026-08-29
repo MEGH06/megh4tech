@@ -1,10 +1,11 @@
 import { DRIVER, DRIVER_ROLES } from '../data/driver';
+import { asset } from '../lib/assets';
 import styles from './GridSlot.module.css';
 
 // Served from public/ as a plain URL rather than imported, so it streams as a
 // static file instead of going through the bundle graph. 2.8 MB, re-encoded
 // from the 36.8 MB original.
-const HERO_VIDEO = '/hero-loop.mp4';
+const HERO_VIDEO = asset('/hero-loop.mp4');
 
 /**
  * The landing.

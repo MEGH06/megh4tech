@@ -1,3 +1,4 @@
+import { asset } from '../lib/assets';
 /**
  * The garage.
  *
@@ -13,12 +14,12 @@
 export const CARS = {
   /** Built procedurally by tools/generate_f1_glb.py — carries the stack as
    *  sponsor decals. The only car that is genuinely Megh's. 1.0 MB. */
-  scuderia: { url: '/models/mclaren-mp4-4.glb', label: 'Scuderia Megh4Tech' },
+  scuderia: { url: asset('/models/mclaren-mp4-4.glb'), label: 'Scuderia Megh4Tech' },
 
-  f2022: { url: '/models/f1_2022_generic.glb', label: '2022 · ground effect' },
-  williams: { url: '/models/2008_williams_fw30.glb', label: '2008 · FW30' },
-  sf71h: { url: '/models/2018_ferrari_sf71h.glb', label: '2018 · SF71H' },
-  f2000: { url: '/models/2000_ferrari_f2000.glb', label: '2000 · F2000' },
+  f2022: { url: asset('/models/f1_2022_generic.glb'), label: '2022 · ground effect' },
+  williams: { url: asset('/models/2008_williams_fw30.glb'), label: '2008 · FW30' },
+  sf71h: { url: asset('/models/2018_ferrari_sf71h.glb'), label: '2018 · SF71H' },
+  f2000: { url: asset('/models/2000_ferrari_f2000.glb'), label: '2000 · F2000' },
 };
 
 export const DEFAULT_CAR = 'scuderia';
