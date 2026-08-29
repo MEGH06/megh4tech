@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { scrollToEl } from '../lib/scrollTo';
 import styles from './SectorNav.module.css';
 
@@ -28,13 +28,25 @@ const STOPS = [
 ];
 
 export default function SectorNav() {
+  const stripRef = useRef(null);
   const [active, setActive] = useState('home');
   const [open, setOpen] = useState(false);
   const [shown, setShown] = useState(false);
 
-  // The button appears only once the landing has started to move.
+  // The strip appears once the landing has started to move, and its rule
+  // tracks how far down the lap you are.
+  //
+  // The width is written straight to a custom property rather than held in
+  // state: it changes on every scroll event, and re-rendering the whole nav
+  // sixty times a second to move a rule two pixels is work for nothing. The
+  // `shown` flag is state because it flips twice in a session.
   useEffect(() => {
-    const onScroll = () => setShown(window.scrollY > 120);
+    const onScroll = () => {
+      setShown(window.scrollY > 120);
+      const span = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = span > 0 ? Math.min(100, (window.scrollY / span) * 100) : 0;
+      stripRef.current?.style.setProperty('--nav-progress', `${pct.toFixed(2)}%`);
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -96,6 +108,37 @@ export default function SectorNav() {
 
   return (
     <>
+      {/* The sector strip — desktop only.
+          A hamburger is a phone control. On a 1440px screen it hides nine
+          items behind a click for no reason and reads as a template, which is
+          exactly how it was measured. Every section is visible here, the
+          current one is the only red thing, and the rule beneath tracks how
+          far down the lap you are. */}
+      <nav
+        ref={stripRef}
+        className={`${styles.strip} ${shown ? styles.stripIn : ''}`}
+        aria-label="Sections"
+      >
+        <ul className={styles.stripList}>
+          {STOPS.map((s2, i) => (
+            <li key={s2.id}>
+              <a
+                href={`#${s2.id}`}
+                onClick={(e) => go(e, s2.id)}
+                className={active === s2.id ? styles.stripOn : undefined}
+                aria-current={active === s2.id ? 'true' : undefined}
+              >
+                <span className={styles.stripN}>
+                  {String(i).padStart(2, '0')}
+                </span>
+                {s2.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <span className={styles.stripRule} aria-hidden="true" />
+      </nav>
+
       <button
         type="button"
         className={`${styles.trigger} ${shown || open ? styles.in : ''}`}

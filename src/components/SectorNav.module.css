@@ -210,3 +210,99 @@
       var(--s-6);
   }
 }
+
+/* --- the sector strip (desktop) ------------------------------------------ */
+
+.strip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 120;
+  display: flex;
+  flex-direction: column;
+  background: rgba(5, 5, 5, 0.88);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-bottom: var(--b-hair) solid var(--c-line);
+
+  /* Absent on the landing, like everything else. The first screen is the car,
+     the name and three tags. */
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0, -100%, 0);
+  transition:
+    opacity 320ms var(--ease-out),
+    transform 320ms var(--ease-out),
+    visibility 0s linear 320ms;
+}
+
+.stripIn {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+
+.stripList {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  padding-inline: max(var(--s-gutter), calc((100% - var(--wrap)) / 2));
+}
+
+.stripList a {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55em;
+  padding: var(--s-4) var(--s-4);
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--c-grey);
+  transition: color 240ms var(--ease-soft), background 240ms var(--ease-soft);
+}
+
+.stripList a:hover {
+  color: var(--c-white);
+  background: var(--c-surface-hi);
+}
+
+/* R2 — the current section is the only red thing in the strip. That is the
+   whole job of an accent: one mark, meaning one thing. */
+.stripOn,
+.stripList a.stripOn:hover {
+  color: var(--c-rosso-text);
+}
+
+.stripN {
+  font-size: 0.6875rem;
+  color: var(--c-grey-2);
+}
+
+.stripOn .stripN {
+  color: var(--c-rosso-text);
+}
+
+.stripRule {
+  height: 2px;
+  background: var(--c-rosso);
+  width: var(--nav-progress, 0%);
+  transition: width 120ms linear;
+}
+
+/* The hamburger is a phone control and goes back to being one. */
+@media (min-width: 981px) {
+  .trigger,
+  .sheet {
+    display: none !important;
+  }
+}
+
+@media (max-width: 980px) {
+  .strip {
+    display: none;
+  }
+}

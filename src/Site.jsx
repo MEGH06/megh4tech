@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import CarWindow from './components/CarWindow';
 import StartLights from './components/StartLights';
 import SectorMark from './components/SectorMark';
@@ -18,6 +18,20 @@ import styles from './Site.module.css';
 
 // ~950 kB of three.js plus the first model. Never in front of first paint.
 const CarStage = lazy(() => import('./three/CarStage'));
+
+/**
+ * The frame-rate floor at which the render is worth keeping.
+ *
+ * 26, not 60. Below this the car is not a flourish, it is a stutter — and the
+ * measured case is not hypothetical: on software rasterisation, which is what
+ * a corporate laptop with no GPU actually gives you, this page runs at roughly
+ * one frame per second. A stunning site that stutters is remembered as a
+ * stuttering site.
+ */
+const FPS_FLOOR = 26;
+
+/** How long to watch before deciding. Long enough to survive the first paint. */
+const SAMPLE_MS = 1100;
 
 const canWebGL = () => {
   if (typeof window === 'undefined') return false;
@@ -76,7 +90,40 @@ export default function Site() {
   }, []);
 
   const progress = useScrollProgress(onScroll);
-  const webgl = canWebGL();
+  const [able] = useState(canWebGL);
+  // Knowable at mount, so it is derived rather than set from an effect — a
+  // preference that exists before first paint is not a thing that "happens".
+  const [reduced] = useState(
+    () => typeof window !== 'undefined'
+      && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  );
+  const [slow, setSlow] = useState(false);
+
+  // Watch the real frame rate for a second, then decide once.
+  //
+  // Detecting the backend by name is unreliable — SwiftShader reports itself
+  // inconsistently and a weak discrete GPU reports itself as fine. Counting
+  // actual frames measures the thing we care about instead of a proxy for it.
+  //
+  // The decision is made once and never revisited: a canvas that appears and
+  // disappears as the frame rate wanders is worse than either state.
+  useEffect(() => {
+    if (!able || reduced) return undefined;
+
+    let frames = 0;
+    let raf = 0;
+    const t0 = performance.now();
+    const tick = () => {
+      frames += 1;
+      const dt = performance.now() - t0;
+      if (dt < SAMPLE_MS) { raf = requestAnimationFrame(tick); return; }
+      if ((frames / dt) * 1000 < FPS_FLOOR) setSlow(true);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [able, reduced]);
+
+  const webgl = able && !reduced && !slow;
 
   return (
     <>

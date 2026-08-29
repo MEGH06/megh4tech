@@ -223,3 +223,13 @@
   .wrap, .panel { transition: opacity 100ms linear; }
   .panel { transform: none; }
 }
+
+/* Below the sector strip, not on top of it.
+   The strip is fixed to the top edge on desktop and its last item ran under
+   this chip. Dropping the chip clear of it is the fix; the strip owns the top
+   band now. */
+@media (min-width: 981px) {
+  .hint {
+    top: calc(var(--s-4) + 58px);
+  }
+}
