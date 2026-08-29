@@ -3,6 +3,7 @@ import { flushSync } from 'react-dom';
 import { createLayout } from 'animejs/layout';
 import { asset } from '../lib/assets';
 import Cascade from './Cascade';
+import MetaStrip from './MetaStrip';
 import useReveal from '../hooks/useReveal';
 import useDockZone from '../hooks/useDockZone';
 import { PROJECTS } from '../data/projects';
@@ -140,10 +141,16 @@ function Project({ p, step, transition }) {
 
         <p className={styles.blurb}>{p.blurb}</p>
 
+        <MetaStrip meta={p.meta} />
+
         {/* The line that does the arguing, so it stays visible collapsed. */}
         {p.result ? (
           <p className={styles.result}>
-            <span className={styles.resultKey}>Result</span>
+            {/* "Outcome", not "Result". The meta strip above already has a
+                RESULT field carrying the competition placing, and the same
+                word meaning two different things in one card is the kind of
+                collision a reader feels without being able to name. */}
+            <span className={styles.resultKey}>Outcome</span>
             {p.result}
           </p>
         ) : null}

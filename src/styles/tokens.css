@@ -89,8 +89,8 @@
   --t-xs: 0.8125rem;
   --t-sm: 0.8125rem;
   --t-base: 1rem;
-  --t-md: 1.25rem;
-  --t-lg: clamp(1.75rem, 4.5vw, 3rem);
+  --t-md: 1.1875rem;   /* section ledes — 19px */
+  --t-lg: clamp(2.375rem, 5.4vw, 4rem);   /* section titles — 38..64px */
   --t-xl: clamp(3rem, 9vw, 7rem);
   --t-2xl: clamp(4.5rem, 16vw, 13rem);   /* the number, and the big stats */
 

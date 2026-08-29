@@ -45,6 +45,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+
+  /* Every digit that sits in a column lines up, everywhere, without anyone
+     having to remember to ask for it. */
+  font-variant-numeric: tabular-nums;
 }
 
 h1,
@@ -137,7 +141,7 @@ button {
    is the bug in the current index.css that leaves reduced-motion keyboard
    users with no focus indicator at all. */
 :focus-visible {
-  outline: var(--b-heavy) solid var(--c-rosso);
+  outline: 2px solid var(--c-rosso);
   outline-offset: 3px;
 }
 
