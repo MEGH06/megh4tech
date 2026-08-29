@@ -36,7 +36,6 @@ export const GROUPS = [
       'Data Pipelines',
       'Model Deployment',
       'CLIP',
-      'Groq',
       'Unsloth',
     ],
   },
