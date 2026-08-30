@@ -60,8 +60,8 @@ export const PROJECTS = [
     pos: 6,
     title: 'EcoSort AI',
     field: 'Computer Vision',
-    viz: 'grid',
-    vizLabel: 'Plastic classification · simulated',
+    viz: 'conveyor',
+    vizLabel: 'Plastic sorting · simulated',
     blurb:
       'A waste-management platform that identifies and sorts plastics by '
       + 'sight.',
@@ -86,7 +86,7 @@ export const PROJECTS = [
     pos: 7,
     title: 'EasyOffRoad',
     field: 'Autonomous Perception',
-    viz: 'sort',
+    viz: 'segment',
     vizLabel: 'Terrain segmentation · simulated',
     blurb:
       'Semantic segmentation for autonomous vehicles in desert and off-road '
@@ -169,8 +169,8 @@ export const PROJECTS = [
       + 'whatever format it came in, CramBot answers questions against it, and '
       + 'Quizzard generates quizzes from the same source — so the answers and '
       + 'the questions both come from the actual material.',
-    viz: 'sort',
-    vizLabel: 'Document sorting · simulated',
+    viz: 'documents',
+    vizLabel: 'Note consolidation · simulated',
     pos: 10,
     title: 'OopsIDidntStudy',
     blurb:
@@ -186,8 +186,8 @@ export const PROJECTS = [
   },
   {
     id: 'lawtune',
-    viz: 'grid',
-    vizLabel: 'Language coverage · simulated',
+    viz: 'languages',
+    vizLabel: '22 languages · simulated',
     pos: 2,
     title: 'LawTune',
     field: 'Legal AI',
@@ -299,8 +299,8 @@ export const PROJECTS = [
       'A convolutional classifier over the PlantVillage dataset, trained to '
       + 'separate disease classes from leaf images alone.',
     result: '>99% accuracy on the PlantVillage dataset.',
-    viz: 'grid',
-    vizLabel: 'Leaf classification · simulated',
+    viz: 'leaf',
+    vizLabel: 'Leaf detection · simulated',
     pos: 11,
     title: 'Potato Leaf Detection',
     blurb:
