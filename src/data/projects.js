@@ -56,6 +56,58 @@ export const PROJECTS = [
     featured: true,
   },
   {
+    id: 'ecosort',
+    pos: 6,
+    title: 'EcoSort AI',
+    field: 'Computer Vision',
+    viz: 'grid',
+    vizLabel: 'Plastic classification · simulated',
+    blurb:
+      'A waste-management platform that identifies and sorts plastics by '
+      + 'sight.',
+    problem:
+      'Plastic sorting is done by hand, at speed, by people who have to be '
+      + 'right about material type — and the compliance reporting that follows '
+      + 'is a second job on top of the first.',
+    built:
+      'Real-time detection through Roboflow and OpenCV behind a FastAPI '
+      + 'service, with a Next.js dashboard carrying live statistics, '
+      + 'classification confidence and a 3D simulation of the line. EPR '
+      + 'reports generate from the same detections, so the compliance audit is '
+      + 'a by-product of the sorting rather than separate work.',
+    result: null,
+    stack: ['Computer Vision', 'Roboflow', 'OpenCV', 'FastAPI', 'Next.js'],
+    code: null,
+    demo: null,
+    featured: true,
+  },
+  {
+    id: 'easyoffroad',
+    pos: 7,
+    title: 'EasyOffRoad',
+    field: 'Autonomous Perception',
+    viz: 'sort',
+    vizLabel: 'Terrain segmentation · simulated',
+    blurb:
+      'Semantic segmentation for autonomous vehicles in desert and off-road '
+      + 'terrain.',
+    problem:
+      'Off-road driving has no lane markings, no kerbs and no signage. The '
+      + 'model has to read the ground itself — which of this is rock, which is '
+      + 'scrub, which is drivable — from terrain that looks nearly uniform.',
+    built:
+      'Mask2Former on a Swin-Large backbone, classifying terrain into trees, '
+      + 'rock, sky and the other off-road classes. Specialised loss handling '
+      + 'for the class imbalance that desert imagery creates, and test-time '
+      + 'augmentation for the cases the training set did not cover. A Next.js '
+      + 'front end carries the training metrics and a 3D simulation scene.',
+    result: null,
+    stack: ['Mask2Former', 'Swin-Large', 'PyTorch', 'Segmentation', 'Next.js'],
+    code: null,
+    demo: null,
+    featured: true,
+  },
+  {
     id: 'cybersecure',
     field: 'Cybersecurity AI',
     problem:
@@ -69,7 +121,7 @@ export const PROJECTS = [
       + 'generative summaries turn detected events into something a human can '
       + 'act on rather than a wall of rows.',
     result: '>99% recall across 1M+ network logs.',
-    pos: 6,
+    pos: 8,
     title: 'CyberSecure',
     blurb:
       'Full intrusion-detection pipeline analysing 1M+ network logs with 99%+ '
@@ -94,7 +146,7 @@ export const PROJECTS = [
       + 'representations, ChromaDB for the vectors — so an answer can draw on '
       + 'both and show the relevant figure beside it rather than describing '
       + 'something the reader cannot see.',
-    pos: 7,
+    pos: 9,
     title: 'JigyasaAI',
     blurb:
       'Multimodal RAG chatbot for PDFs. Upload a document and ask questions to '
@@ -119,7 +171,7 @@ export const PROJECTS = [
       + 'the questions both come from the actual material.',
     viz: 'sort',
     vizLabel: 'Document sorting · simulated',
-    pos: 8,
+    pos: 10,
     title: 'OopsIDidntStudy',
     blurb:
       'Last-minute study platform. PanicNotes consolidates notes from mixed '
@@ -249,7 +301,7 @@ export const PROJECTS = [
     result: '>99% accuracy on the PlantVillage dataset.',
     viz: 'grid',
     vizLabel: 'Leaf classification · simulated',
-    pos: 9,
+    pos: 11,
     title: 'Potato Leaf Detection',
     blurb:
       'Convolutional network for plant disease classification, 99%+ accuracy '
