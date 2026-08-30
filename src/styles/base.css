@@ -33,7 +33,27 @@ html {
 }
 
 body {
-  background: var(--c-black);
+  /* Painted on the body itself rather than a pseudo-element or an extra
+     layer: no stacking to reason about against the fixed canvas, and the
+     colour underneath stays explicit so nothing shows through if the
+     gradients fail to paint. `fixed` attachment keeps the light still while
+     the page scrolls past it, which is what makes it read as a room rather
+     than as a texture printed on the document. */
+  background-color: var(--c-black);
+  background-image:
+    radial-gradient(
+      130% 95% at 76% 12%,
+      rgba(255, 255, 255, var(--glow)) 0%,
+      rgba(255, 255, 255, calc(var(--glow) * 0.35)) 34%,
+      transparent 66%
+    ),
+    radial-gradient(
+      95% 75% at 14% 86%,
+      rgba(200, 16, 46, calc(var(--glow) * 0.5)) 0%,
+      transparent 58%
+    );
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   color: var(--c-white);
   font-family: var(--f-body);
   font-size: var(--t-base);

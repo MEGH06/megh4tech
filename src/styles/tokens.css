@@ -128,6 +128,17 @@
   --chamfer: 14px;
   --chamfer-sm: 7px;
 
+  /* --- ambient ----------------------------------------------------------
+     How lit the page ground is. ONE number: set it to 0 and the background
+     is flat black again with nothing else to undo.
+
+     The argument for it being here at all: the car is a lit object, and it
+     sits on a ground with no light on it whatsoever, so the render reads as
+     pasted onto the page rather than photographed in the same room. This is
+     light falling off, not a gradient laid on top — which is why it is
+     anchored to where the car actually is rather than centred decoratively. */
+  --glow: 0.11;
+
   --s-gutter: 64px;
 
   --wrap: 1320px;
