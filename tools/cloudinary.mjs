@@ -64,7 +64,11 @@ async function readEnv() {
   }
 
   const env = {};
-  for (const line of raw.split(NL)) {
+  // Split on CRLF as well as LF. On Windows the file is written CRLF, and in
+  // JavaScript `.` does not match a carriage return — so `(.*)$` below fails
+  // on every line that HAS a value, while empty lines pass because `\s*`
+  // swallows the CR. The symptom is a populated .env reported as empty.
+  for (const line of raw.split(/\r?\n/)) {
     const m = line.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*)$/);
     if (m) env[m[1]] = m[2].trim().replace(/^["']|["']$/g, '');
   }
