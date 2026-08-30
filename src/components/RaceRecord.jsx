@@ -47,13 +47,19 @@ export default function RaceRecord() {
           {RESULTS.map((r, i) => (
             <li
               key={r.round}
-              className={r.result === 'Winner' ? styles.win : undefined}
               data-step={Math.min(6, i + 1)}
             >
-              <div className={styles.place}>
-                <span className={styles.result}>{r.result}</span>
-                {r.season ? <span className={styles.when}>{r.season}</span> : null}
-              </div>
+              {/* The placing is not repeated on the row. The summary above
+                  already says 7 wins and 11 podiums; writing WINNER against
+                  seven of eleven entries states the same fact a second time
+                  and turns the list into a scoreboard instead of a record of
+                  what was built. The date stays — it is the one thing the
+                  summary cannot carry. */}
+              {r.season ? (
+                <div className={styles.place}>
+                  <span className={styles.when}>{r.season}</span>
+                </div>
+              ) : null}
 
               <div className={styles.body}>
                 <h3 className={styles.event}>

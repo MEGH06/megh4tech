@@ -140,26 +140,6 @@
   margin-top: var(--s-2);
 }
 
-.result {
-  font-family: var(--f-display);
-  font-weight: 700;
-  font-size: 1.0625rem;
-  line-height: 1.12;
-  letter-spacing: 0.04em;
-  color: var(--c-white);
-  font-variant-numeric: tabular-nums;
-}
-
-/* One colour rule does all the work: nine wins register at a glance without
-   a badge on every row. */
-.win .result {
-  color: var(--c-rosso-text);
-}
-
-.win td:first-child {
-  box-shadow: inset 3px 0 0 var(--c-rosso);
-}
-
 @media (max-width: 760px) {
   .section {
     padding-block: var(--s-8);
@@ -189,34 +169,14 @@
   border: var(--b-hair) solid var(--c-line);
   clip-path: polygon(0 0, calc(100% - var(--chamfer)) 0, 100% var(--chamfer), 100% 100%, var(--chamfer) 100%, 0 calc(100% - var(--chamfer)));
   padding: var(--s-5);
-  display: grid;
-  grid-template-columns: 132px 1fr;
-  gap: var(--s-4) var(--s-5);
-  padding-bottom: var(--s-5);
-  border-bottom: var(--b-hair) solid transparent;
-  border-image: var(--rule-hair) 1;
+  display: block;
 }
 
+/* The date now sits above the name as a small mark, the way the project
+   cards carry their field label — same shape, so the two sections read as
+   one system rather than two layouts. */
 .place {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3em;
-  padding-top: 0.2em;
-}
-
-.result {
-  font-family: var(--f-display);
-  font-weight: 700;
-  font-size: 1.0625rem;
-  line-height: 1.12;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--c-grey);
-  line-height: 1;
-}
-
-.win .result {
-  color: var(--c-rosso-text);
+  margin-bottom: var(--s-2);
 }
 
 .when {
