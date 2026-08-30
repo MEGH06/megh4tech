@@ -112,6 +112,22 @@ export default function Site() {
   );
   const [slow, setSlow] = useState(false);
 
+  /**
+   * Whether the 3D stage has been mounted yet.
+   *
+   * It is not visible on the landing. `--stage-in` is 0.000 at the top of the
+   * page and the hero video covers the viewport opaquely, so the canvas is
+   * behind something you cannot see through — and mounting it immediately
+   * cost the first screen 4.3 MB of car models plus the three.js chunk, for a
+   * render nobody could see.
+   *
+   * Held back until the reader either scrolls or the browser goes idle,
+   * whichever comes first. Someone who reads the landing and leaves never
+   * downloads it; someone who scrolls starts the fetch the moment they do,
+   * well before the car has faded in.
+   */
+  const [staged, setStaged] = useState(false);
+
   // Watch the real frame rate for a second, then decide once.
   //
   // Detecting the backend by name is unreliable — SwiftShader reports itself
@@ -150,11 +166,33 @@ export default function Site() {
 
   const webgl = able && !reduced && !slow;
 
+  useEffect(() => {
+    if (!webgl || staged) return undefined;
+
+    const arm = () => setStaged(true);
+    const onScroll = () => { if (window.scrollY > 0) arm(); };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // A timer, not requestIdleCallback. Idle fires the instant the browser has
+    // nothing to do, which after first paint is immediately — measured, it
+    // armed so fast the landing still pulled all 4.3 MB and the deferral
+    // bought nothing. Five seconds is long enough that a reader who glances
+    // and leaves never pays for it, and short enough that a slow reader has
+    // the car ready before they reach it.
+    const timer = window.setTimeout(arm, 5000);
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.clearTimeout(timer);
+    };
+  }, [webgl, staged]);
+
   return (
     <>
       {lights ? <StartLights onDone={lightsOut} /> : null}
 
-      {webgl ? (
+      {webgl && staged ? (
         <Suspense fallback={null}>
           <CarStage progress={progress} invalidateRef={invalidate} />
         </Suspense>
