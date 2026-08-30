@@ -57,6 +57,18 @@ export const PROJECTS = [
   },
   {
     id: 'cybersecure',
+    field: 'Cybersecurity AI',
+    problem:
+      'Intrusion detection has to read enormous volumes of network traffic and '
+      + 'still be trusted afterwards. Detection alone is not enough: if the '
+      + 'record of what was seen can be altered, the evidence is worthless.',
+    built:
+      'CSV and PCAP ingestion plus live Wireshark capture, with anomaly '
+      + 'detection over the stream. A Merkle-tree chain makes the log tamper-'
+      + 'evident, so a record cannot be quietly changed after the fact, and '
+      + 'generative summaries turn detected events into something a human can '
+      + 'act on rather than a wall of rows.',
+    result: '>99% recall across 1M+ network logs.',
     pos: 6,
     title: 'CyberSecure',
     blurb:
@@ -72,6 +84,16 @@ export const PROJECTS = [
   },
   {
     id: 'jigyasa',
+    field: 'Multimodal RAG',
+    problem:
+      'Document retrieval that only reads text loses whatever lives in the '
+      + 'diagrams, and in technical documents the diagram is frequently where '
+      + 'the answer is.',
+    built:
+      'Text and visual retrieval running together — CLIP for the visual '
+      + 'representations, ChromaDB for the vectors — so an answer can draw on '
+      + 'both and show the relevant figure beside it rather than describing '
+      + 'something the reader cannot see.',
     pos: 7,
     title: 'JigyasaAI',
     blurb:
@@ -86,6 +108,15 @@ export const PROJECTS = [
   },
   {
     id: 'oopsi',
+    field: 'AI Education',
+    problem:
+      'Study material arrives as a pile of mixed formats the night before, and '
+      + 'turning it into something revisable is the work nobody has time for.',
+    built:
+      'Three stages over one pipeline: PanicNotes consolidates the material '
+      + 'whatever format it came in, CramBot answers questions against it, and '
+      + 'Quizzard generates quizzes from the same source — so the answers and '
+      + 'the questions both come from the actual material.',
     viz: 'sort',
     vizLabel: 'Document sorting · simulated',
     pos: 8,
@@ -103,8 +134,8 @@ export const PROJECTS = [
   },
   {
     id: 'lawtune',
-    viz: 'graph',
-    vizLabel: 'Judgment graph · simulated',
+    viz: 'grid',
+    vizLabel: 'Language coverage · simulated',
     pos: 2,
     title: 'LawTune',
     field: 'Legal AI',
@@ -115,17 +146,16 @@ export const PROJECTS = [
       'Legal help in India is English-first, and the people who need it most '
       + 'often do not read English. A model big enough to reason about case law '
       + 'will not fit on a mid-range phone, and full fine-tuning across 22 '
-      + 'languages was never going to run on free Colab compute.',
+      + 'languages was never going to run on the compute available.',
     role: 'Sole engineer — fine-tuning through on-device deployment.',
     built:
-      'QLoRA on Gemma-2B with guardrails keeping it inside the legal domain. A '
-      + 'Neo4j knowledge graph built from Supreme Court judgments 2016–2023, so '
-      + 'retrieval follows relationships between cases rather than matching '
-      + 'text. TensorRT and model compression for mobile-first inference.',
-    result:
-      '>99% fewer trainable parameters than full fine-tuning · ~20% lower '
-      + 'response latency · ~30% smaller footprint · runs offline on device.',
-    stack: ['Gemma-2B', 'QLoRA', 'Neo4j', 'GraphRAG', 'TensorRT', 'Unsloth'],
+      'LoRA on a 4-bit quantised Gemma-2B, so the whole thing fits inside the '
+      + 'compute a phone actually has. Guardrails hold it inside the legal '
+      + 'domain and make abstention the default rather than an afterthought — '
+      + 'a legal assistant that guesses is worse than one that declines. '
+      + 'Inference runs locally through MLX.',
+    result: null,
+    stack: ['Gemma-2B', 'QLoRA', 'MLX', '4-bit quantisation', 'On-device'],
     code: 'https://github.com/MEGH06/LawTune',
     demo: null,
     featured: true,
@@ -209,6 +239,14 @@ export const PROJECTS = [
   },
   {
     id: 'potato',
+    field: 'Computer Vision',
+    problem:
+      'Plant disease is diagnosed by eye, which needs someone who knows what '
+      + 'they are looking at standing in the field.',
+    built:
+      'A convolutional classifier over the PlantVillage dataset, trained to '
+      + 'separate disease classes from leaf images alone.',
+    result: '>99% accuracy on the PlantVillage dataset.',
     viz: 'grid',
     vizLabel: 'Leaf classification · simulated',
     pos: 9,

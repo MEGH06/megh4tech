@@ -23,11 +23,16 @@ export const DRIVER = {
   // and the most generic sentence on this one. It describes every portfolio
   // ever published, so it distinguishes nothing and a reader skips it. This
   // says the same thing in words that could only be about him.
-  blurb: 'I build machine-learning systems and ship them to production.',
+  blurb: 'I build across the stack.',
 };
 
 /** The three disciplines, as tags. */
-export const DRIVER_ROLES = ['AI / ML Engineer', 'Full Stack', 'DevOps'];
+export const DRIVER_ROLES = [
+  'AI / ML Engineer',
+  'Full Stack Engineer',
+  'Researcher',
+  'Systems Builder',
+];
 
 /**
  * The overview, carried over word for word from the previous site.
@@ -37,18 +42,30 @@ export const DRIVER_ROLES = ['AI / ML Engineer', 'Full Stack', 'DevOps'];
  * the rebuild entirely, which left the site impressive and uninformative.
  */
 export const BIO = [
-  'I am currently pursuing a B.Tech in Computer Science and Engineering '
-  + '(Data Science) at D.J. Sanghvi College of Engineering. I like building '
-  + 'practical machine learning solutions and understanding how intelligent '
-  + 'systems can be used to solve real problems.',
+  'I am pursuing a B.Tech in Computer Science and Engineering with a '
+  + 'specialisation in Data Science at D.J. Sanghvi College of Engineering, '
+  + 'along with an Honours in Computational Finance. My work sits at the '
+  + 'intersection of AI, software engineering and research.',
 
-  'I have worked on medical image preprocessing, document automation, data '
-  + 'analytics, and projects in fintech, law and agriculture.',
+  'I have built machine-learning systems, generative AI applications, RAG '
+  + 'pipelines, multi-agent systems, computer vision projects, financial '
+  + 'models and research tools — and the engineering around them: backend '
+  + 'services, APIs, authentication, data schemas, databases, cloud services, '
+  + 'Docker, Terraform and deployment. I work on the product side too, on '
+  + 'application design, UX and the interfaces people actually use.',
 
-  'I also enjoy learning through research — reading papers, exploring '
-  + 'different approaches, and trying methods out to understand what works '
-  + 'best. I prefer working end to end, from understanding the problem to '
-  + 'shipping something useful.',
+  'Research is a large part of it. I completed a project at IIT Bombay on '
+  + 'Physics-Informed Neural Networks and temporal modelling, my ConvNeXt work '
+  + 'has been presented, and I am currently researching federated learning and '
+  + 'writing a paper on it.',
+
+  'A lot of the rest has come from hackathons — taking an idea and getting it '
+  + 'working under a hard deadline. That has run through autonomous software '
+  + 'engineering, legal AI, fintech, cybersecurity, multimodal retrieval, '
+  + 'computer vision and financial risk.',
+
+  'I like difficult problems, learning whatever the problem needs, and '
+  + 'understanding a system from the idea all the way to the thing that runs.',
 ];
 
 const pad = (n) => String(n).padStart(2, '0');

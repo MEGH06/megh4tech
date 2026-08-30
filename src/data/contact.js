@@ -20,11 +20,22 @@ export const CONTACT = {
 
 /** What he takes on. Straight from the old contact form's service list. */
 export const SERVICES = [
-  'AI / ML Solutions',
-  'Smart Application Integration',
-  'Chatbot Integration',
-  'Website Revamp',
+  'AI & Machine Learning Solutions',
+  'Generative AI & RAG Systems',
+  'Agentic AI Applications',
+  'ML Model Deployment',
+  'Backend & API Development',
+  'Full Stack Application Development',
+  'Mobile Application Development',
+  'AI Application Integration',
   'Data Analysis',
+  'Database & Schema Design',
+  'Authentication Systems',
+  'Cloud & Infrastructure',
+  'Docker & Containerisation',
+  'Terraform & Infrastructure as Code',
+  'UI / UX Design',
+  'Application Revamp',
 ];
 
 /**

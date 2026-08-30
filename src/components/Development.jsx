@@ -33,7 +33,13 @@ export default function Development() {
             <li key={r.id} className={styles.item} data-step={i + 1}>
               <div className={styles.top}>
                 <h3 className={styles.name}>{r.title}</h3>
-                <span className={styles.status}>{r.status}</span>
+                <span
+                  className={`${styles.status} ${
+                    r.status === 'Ongoing' ? styles.statusOn : ''
+                  }`}
+                >
+                  {r.status}
+                </span>
               </div>
 
               {r.where ? <p className={styles.where}>{r.where}</p> : null}

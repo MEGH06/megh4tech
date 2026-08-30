@@ -45,8 +45,11 @@
   flex: 1 1 20ch;
 }
 
-/* Giallo, not red: this is live state, and red is already carrying structure
-   everywhere else on the page. */
+/* Yellow means in progress, and only that.
+   All four entries wore it while three of them were finished, which made the
+   badge decorative — if every state is the caution colour, the colour is not
+   reporting a state. Ongoing keeps the flag; work that is done reads as done,
+   in a quiet outline. */
 .status {
   display: inline-flex;
   align-items: center;
@@ -55,8 +58,9 @@
   font-size: var(--t-xs);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--c-black);
-  background: var(--c-giallo);
+  color: var(--c-grey);
+  background: none;
+  border: var(--b-hair) solid var(--c-line);
   padding: 0.3em 0.7em;
   white-space: nowrap;
 }
@@ -100,4 +104,11 @@
   .section {
     padding-block: var(--s-8);
   }
+}
+
+/* In-progress work takes the yellow flag. Finished work does not. */
+.statusOn {
+  color: var(--c-black);
+  background: var(--c-yellow);
+  border-color: var(--c-yellow);
 }
