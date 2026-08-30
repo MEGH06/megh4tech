@@ -349,12 +349,12 @@
 }
 
 .viewAll::after {
-  content: "93";
+  content: "↓";
   font-size: 0.9em;
 }
 
 .viewAll[aria-expanded="true"]::after {
-  content: "91";
+  content: "↑";
 }
 
 

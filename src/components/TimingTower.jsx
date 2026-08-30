@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { createLayout } from 'animejs/layout';
 import { asset } from '../lib/assets';
+import ProjectViz from './ProjectViz';
 import useReveal from '../hooks/useReveal';
 import useDockZone from '../hooks/useDockZone';
 import { PROJECTS } from '../data/projects';
@@ -107,10 +108,14 @@ function Project({ p, step, transition }) {
       data-project={p.id}
       // Drives the two-column layout below. Only cards with a screenshot get
       // the image track, so the ones without do not sit in a short column.
-      data-shot={p.shot ? 'yes' : undefined}
+      data-shot={p.shot || p.viz ? 'yes' : undefined}
     >
       {/* Rendered only when a file exists. A card with no screenshot shows
           none, rather than a broken image or a grey placeholder box. */}
+      {!p.shot && p.viz ? (
+        <ProjectViz mode={p.viz} label={p.vizLabel} />
+      ) : null}
+
       {p.shot ? (
         <a
           className={styles.shotWrap}

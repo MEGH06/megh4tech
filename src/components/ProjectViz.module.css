@@ -1,0 +1,32 @@
+/* Occupies exactly the slot a screenshot would, so a card with a generated
+   picture and a card with a real one are the same shape. */
+.wrap {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: #070708;
+  border-top: 2px solid var(--c-rosso);
+  overflow: hidden;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Says what it is. A generated picture that does not admit to being one is
+   asking the reader to mistake it for a screenshot of the product. */
+.tag {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 5px var(--s-3) 6px;
+  background: linear-gradient(to top, rgba(5, 5, 5, 0.94) 55%, transparent);
+  font-family: var(--f-mono);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--c-grey);
+  pointer-events: none;
+}

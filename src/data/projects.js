@@ -86,6 +86,8 @@ export const PROJECTS = [
   },
   {
     id: 'oopsi',
+    viz: 'sort',
+    vizLabel: 'Document sorting · simulated',
     pos: 8,
     title: 'OopsIDidntStudy',
     blurb:
@@ -101,6 +103,8 @@ export const PROJECTS = [
   },
   {
     id: 'lawtune',
+    viz: 'graph',
+    vizLabel: 'Judgment graph · simulated',
     pos: 2,
     title: 'LawTune',
     field: 'Legal AI',
@@ -155,6 +159,8 @@ export const PROJECTS = [
   },
   {
     id: 'equilibrium',
+    viz: 'cascade',
+    vizLabel: 'Risk propagation · simulated',
     pos: 5,
     title: 'Equilibrium.ai',
     field: 'Financial Risk',
@@ -203,6 +209,8 @@ export const PROJECTS = [
   },
   {
     id: 'potato',
+    viz: 'grid',
+    vizLabel: 'Leaf classification · simulated',
     pos: 9,
     title: 'Potato Leaf Detection',
     blurb:
