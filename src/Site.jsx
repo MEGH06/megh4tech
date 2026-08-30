@@ -29,8 +29,22 @@ const CarStage = lazy(() => import('./three/CarStage'));
  */
 const FPS_FLOOR = 26;
 
-/** How long to watch before deciding. Long enough to survive the first paint. */
-const SAMPLE_MS = 1100;
+/** How long to watch once watching starts. */
+const SAMPLE_MS = 1400;
+
+/**
+ * How long to wait before watching at all.
+ *
+ * The first seconds after mount are the worst frame rate this page will ever
+ * produce — 260 KB of JavaScript parsing, a 2.8 MB video decoding, a model
+ * downloading, and a full-screen intro running over the top. Measured on a
+ * machine holding a steady 61fps, the opening window read low enough to trip
+ * the floor and the car was removed from a browser perfectly able to draw it.
+ *
+ * That window says nothing about whether the machine can hold a frame rate.
+ * Wait for the page to settle, then ask.
+ */
+const SETTLE_MS = 3200;
 
 const canWebGL = () => {
   if (typeof window === 'undefined') return false;
@@ -109,17 +123,29 @@ export default function Site() {
   useEffect(() => {
     if (!able || reduced) return undefined;
 
-    let frames = 0;
     let raf = 0;
-    const t0 = performance.now();
-    const tick = () => {
-      frames += 1;
-      const dt = performance.now() - t0;
-      if (dt < SAMPLE_MS) { raf = requestAnimationFrame(tick); return; }
-      if ((frames / dt) * 1000 < FPS_FLOOR) setSlow(true);
+    let timer = 0;
+    let stopped = false;
+
+    const measure = () => {
+      let frames = 0;
+      const t0 = performance.now();
+      const tick = () => {
+        if (stopped) return;
+        frames += 1;
+        const dt = performance.now() - t0;
+        if (dt < SAMPLE_MS) { raf = requestAnimationFrame(tick); return; }
+        if ((frames / dt) * 1000 < FPS_FLOOR) setSlow(true);
+      };
+      raf = requestAnimationFrame(tick);
     };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+
+    timer = window.setTimeout(measure, SETTLE_MS);
+    return () => {
+      stopped = true;
+      window.clearTimeout(timer);
+      cancelAnimationFrame(raf);
+    };
   }, [able, reduced]);
 
   const webgl = able && !reduced && !slow;
