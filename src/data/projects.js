@@ -186,8 +186,8 @@ export const PROJECTS = [
   },
   {
     id: 'lawtune',
-    viz: 'languages',
-    vizLabel: '22 languages · simulated',
+    viz: 'scales',
+    vizLabel: 'Legal Q&A · simulated',
     pos: 2,
     title: 'LawTune',
     field: 'Legal AI',
