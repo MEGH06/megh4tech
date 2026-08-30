@@ -18,15 +18,16 @@ import styles from './Enquiry.module.css';
  * that it leaves the page, which is why the fields are few and the direct
  * address is shown right beside it for anyone who would rather just write.
  *
- * The fields are the ones that make a first reply useful: who, what kind of
- * work, roughly what budget. Asking more loses people at exactly the moment
- * they were willing.
+ * The fields are the ones that make a first reply useful: who they are, how to
+ * reach them, and what kind of work. Asking more loses people at exactly the
+ * moment they were willing — and a budget field asks someone to price the job
+ * before they have described it, which is the question most likely to make
+ * them close the tab.
  */
 export default function Enquiry() {
   const [name, setName] = useState('');
   const [from, setFrom] = useState('');
   const [need, setNeed] = useState(SERVICES[0] ?? '');
-  const [budget, setBudget] = useState('');
   const [note, setNote] = useState('');
   const [sent, setSent] = useState(false);
 
@@ -39,7 +40,6 @@ export default function Enquiry() {
       `Name: ${name.trim()}`,
       `Reply to: ${from.trim()}`,
       `Looking for: ${need}`,
-      budget.trim() ? `Budget: ${budget.trim()}` : null,
       '',
       note.trim() || '(no details yet)',
       '',
@@ -94,15 +94,6 @@ export default function Enquiry() {
           </select>
         </label>
 
-        <label className={styles.field}>
-          <span className={styles.label}>Budget <i>optional</i></span>
-          <input
-            className={styles.input}
-            value={budget}
-            onChange={(e) => setBudget(e.target.value)}
-            placeholder="₹1,00,000  ·  $2,500  ·  not sure yet"
-          />
-        </label>
       </div>
 
       <label className={`${styles.field} ${styles.wide}`}>
