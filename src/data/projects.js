@@ -29,11 +29,6 @@
 export const PROJECTS = [
   {
     id: 'forge',
-    meta: {
-      event: 'ChatGPT Hackathon · Codex Community',
-      result: 'Winner',
-      role: 'Agent swarm · Eval gate · CI/CD',
-    },
     pos: 1,
     title: 'Forge',
     field: 'Autonomous Engineering',
@@ -106,11 +101,6 @@ export const PROJECTS = [
   },
   {
     id: 'lawtune',
-    meta: {
-      result: 'Shipped',
-      role: 'Fine-tuning · GraphRAG · On-device',
-      team: 'Solo',
-    },
     pos: 2,
     title: 'LawTune',
     field: 'Legal AI',
@@ -138,11 +128,6 @@ export const PROJECTS = [
   },
   {
     id: 'litagent',
-    meta: {
-      event: 'Hackanova 5.0',
-      result: '2nd Runner-Up',
-      role: 'Agent architecture · Verification',
-    },
     pos: 4,
     title: 'LitAgent',
     field: 'Agentic Research',
@@ -170,12 +155,6 @@ export const PROJECTS = [
   },
   {
     id: 'equilibrium',
-    meta: {
-      event: 'Datathon 2026 · Core ML',
-      result: 'Runner-Up',
-      role: 'ML pipeline · Risk model · Backend',
-      team: '4',
-    },
     pos: 5,
     title: 'Equilibrium.ai',
     field: 'Financial Risk',
@@ -199,11 +178,6 @@ export const PROJECTS = [
   },
   {
     id: 'fincognia',
-    meta: {
-      event: 'Hackxios 2K25 · Innovation',
-      result: 'Winner',
-      role: 'Forecasting · Agentic actions',
-    },
     pos: 3,
     title: 'Fincognia',
     field: 'Agentic Finance',

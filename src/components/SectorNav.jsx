@@ -120,7 +120,7 @@ export default function SectorNav() {
         aria-label="Sections"
       >
         <ul className={styles.stripList}>
-          {STOPS.map((s2, i) => (
+          {STOPS.map((s2) => (
             <li key={s2.id}>
               <a
                 href={`#${s2.id}`}
@@ -128,9 +128,6 @@ export default function SectorNav() {
                 className={active === s2.id ? styles.stripOn : undefined}
                 aria-current={active === s2.id ? 'true' : undefined}
               >
-                <span className={styles.stripN}>
-                  {String(i).padStart(2, '0')}
-                </span>
                 {s2.label}
               </a>
             </li>
