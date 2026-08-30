@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { createLayout } from 'animejs/layout';
 import { asset } from '../lib/assets';
-import Cascade from './Cascade';
 import useReveal from '../hooks/useReveal';
 import useDockZone from '../hooks/useDockZone';
 import { PROJECTS } from '../data/projects';
@@ -178,10 +177,6 @@ function Project({ p, step, transition }) {
             </dl>
           </>
         ) : null}
-
-        {/* The one move. Equilibrium is the only project whose subject is
-            itself a picture, so it gets the picture. */}
-        {p.id === 'equilibrium' ? <Cascade /> : null}
 
         <ul className={styles.stack}>
           {p.stack.map((t) => (
