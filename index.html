@@ -9,36 +9,50 @@
   <!-- Essential Mobile Responsiveness -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
 
-  <!-- Primary Meta Tags for SEO -->
-  <title>megh4tech</title>
-  <meta name="title" content="Megh Dave - AI/ML Researcher & Developer Portfolio" />
+  <!--
+    Every URL in this head used to point at https://huggingface.co/spaces/MEGH06/portfolio,
+    which now answers 401. The canonical was the damaging one: it told search
+    engines the real address of this page was somewhere else, which is a
+    request to drop this site from the index in favour of a page nobody can
+    open. The og:image 401'd too, so every link shared to a client — WhatsApp,
+    LinkedIn, Slack, email — previewed as a blank card.
+  -->
+  <title>Megh Dave — AI/ML &amp; Full Stack Engineer, Mumbai</title>
+  <!-- 132 characters. Google truncates the snippet around 155-160, and a
+       description cut mid-sentence in the result reads as a site nobody
+       checked. The og: copy below can run longer; social cards do not clip
+       as hard. -->
   <meta name="description"
-    content="Portfolio of Megh Dave, an AI/ML Researcher & Developer. Innovating practical, scalable solutions in Artificial Intelligence, Deep Learning, Data Science, and Full Stack Development that make technology work effortlessly in the real world." />
-  <meta name="keywords"
-    content="Megh Dave, AI Researcher, ML Developer, Machine Learning, Deep Learning, Data Science, Full Stack Developer, Generative AI, NLP, Computer Vision, Python, TensorFlow, React, Node.js, DevOps, Docker, Kubernetes" />
+    content="AI/ML and full-stack engineer in Mumbai. I build machine-learning systems, RAG pipelines and agentic AI. Available for freelance work." />
   <meta name="author" content="Megh Dave" />
-  <meta name="robots" content="index, follow" />
-  <meta name="language" content="English" />
-  <meta name="revisit-after" content="7 days" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <link rel="canonical" href="https://megh4tech.vercel.app/" />
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://huggingface.co/spaces/MEGH06/portfolio" />
-  <meta property="og:title" content="Megh Dave - AI/ML Researcher & Developer Portfolio" />
+  <!-- Open Graph. This is what a client sees when the link is pasted into a
+       chat, and for freelance work it is the single most-seen surface on the
+       site — more people see the card than open the page. -->
+  <meta property="og:type" content="profile" />
+  <meta property="og:site_name" content="Megh Dave" />
+  <meta property="og:locale" content="en_IN" />
+  <meta property="og:url" content="https://megh4tech.vercel.app/" />
+  <meta property="og:title" content="Megh Dave — AI/ML &amp; Full Stack Engineer, Mumbai" />
   <meta property="og:description"
-    content="Innovating practical, scalable solutions in AI, Deep Learning, and Full Stack Development. Explore my projects and expertise." />
-  <meta property="og:image" content="https://huggingface.co/spaces/MEGH06/portfolio/resolve/main/og-image.jpg" />
+    content="I build machine-learning systems, RAG pipelines, agentic AI and the backends around them. Available for freelance work." />
+  <meta property="og:image" content="https://megh4tech.vercel.app/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Megh Dave — AI/ML and full stack engineer, Mumbai" />
+  <meta property="profile:first_name" content="Megh" />
+  <meta property="profile:last_name" content="Dave" />
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://huggingface.co/spaces/MEGH06/portfolio" />
-  <meta property="twitter:title" content="Megh Dave - AI/ML Researcher & Developer Portfolio" />
-  <meta property="twitter:description"
-    content="Innovating practical, scalable solutions in AI, Deep Learning, and Full Stack Development. Explore my projects and expertise." />
-  <meta property="twitter:image" content="https://huggingface.co/spaces/MEGH06/portfolio/resolve/main/og-image.jpg" />
-
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://huggingface.co/spaces/MEGH06/portfolio" />
+  <!-- Twitter/X reads name=, not property=. The old tags used property= for
+       all four, which is why they were ignored. -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Megh Dave — AI/ML &amp; Full Stack Engineer, Mumbai" />
+  <meta name="twitter:description"
+    content="I build machine-learning systems, RAG pipelines, agentic AI and the backends around them. Available for freelance work." />
+  <meta name="twitter:image" content="https://megh4tech.vercel.app/og.png" />
+  <meta name="twitter:image:alt" content="Megh Dave — AI/ML and full stack engineer, Mumbai" />
 
   <!-- Theme Color for Mobile Browsers -->
   <meta name="theme-color" content="#050505" />
@@ -60,34 +74,38 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <!-- Schema.org Structured Data for SEO -->
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Megh Dave",
-      "url": "https://huggingface.co/spaces/MEGH06/portfolio",
-      "jobTitle": "AI/ML Engineer & Data Scientist",
-      "alumniOf": "Dwarkadas J. Sanghvi College of Engineering",
-      "knowsAbout": ["Machine Learning", "Deep Learning", "Data Science", "Python", "TensorFlow", "PyTorch", "React", "Node.js", "Computer Vision", "Natural Language Processing"],
-      "sameAs": [
-        "https://www.linkedin.com/in/megh-dave-4a2227314/",
-        "https://github.com/megh06"
-      ]
-    }
-    </script>
+  <!--
+    Structured data. Two graphs rather than one Person: the page IS the
+    profile, so ProfilePage/mainEntity is the shape Google documents for a
+    person's own site, and it is what lets the knowledge panel and sitelinks
+    attach to the right entity.
+
+    Generated from src/data at build time — see the seo plugin in
+    vite.config.js — so it cannot drift from what the page actually says.
+  -->
+  <!--seo:jsonld-->
 </head>
 
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
 
-  <!-- Accessibility: Skip to main content -->
+  <!--
+    A real text version of the site for anything that does not run JavaScript.
+
+    This used to say "please enable JavaScript", which is a dead end for a
+    visitor and 190 characters of nothing for a crawler that does not render —
+    and several of the crawlers that matter here do not, including some that
+    build the previews and answers a client sees before they ever load the
+    page. noscript is the correct place for it: it is never shown to a visitor
+    who has JavaScript, so it cannot be a flash of unstyled content, and it is
+    the same content the app renders, so it is not a separate page written for
+    machines.
+
+    Generated from src/data at build time.
+  -->
   <noscript>
-    <div style="padding: 2rem; text-align: center; background: #000; color: #fff;">
-      <h1>Megh Dave - AI/ML Engineer Portfolio</h1>
-      <p>This website requires JavaScript to function properly. Please enable JavaScript in your browser settings.</p>
-    </div>
+    <!--seo:noscript-->
   </noscript>
 </body>
 
