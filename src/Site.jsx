@@ -13,6 +13,7 @@ import RaceRecord from './components/RaceRecord';
 import Skills from './components/Skills';
 import TimingTower from './components/TimingTower';
 import useScrollProgress from './hooks/useScrollProgress';
+import { lapTime, markLapDirty } from './lib/lapClock';
 import styles from './Site.module.css';
 
 // ~950 kB of three.js plus the first model. Never in front of first paint.
@@ -96,13 +97,22 @@ export default function Site() {
   // The same pass fades the stage in: the landing is video only, and the car
   // arrives as you leave it. Written as a custom property rather than state —
   // this runs on every scroll frame.
+  //
+  // Everything downstream runs on LAP time, not raw scroll: on a phone the
+  // sections are proportioned nothing like the desktop page the lap was cut
+  // against, so progress is re-timed to the page first (lib/lapClock.js). On
+  // desktop the two are identical. Read before write — `lapTime` may measure
+  // layout, and the custom property write comes after it.
+  const lap = useRef(0);
   const onScroll = useCallback((p) => {
-    const reveal = Math.min(1, Math.max(0, (p - 0.02) / 0.09));
+    const lp = lapTime(p);
+    lap.current = lp;
+    const reveal = Math.min(1, Math.max(0, (lp - 0.02) / 0.09));
     document.documentElement.style.setProperty('--stage-in', reveal.toFixed(3));
     invalidate.current?.();
   }, []);
 
-  const progress = useScrollProgress(onScroll);
+  useScrollProgress(onScroll, markLapDirty);
   const [able] = useState(canWebGL);
   // Knowable at mount, so it is derived rather than set from an effect — a
   // preference that exists before first paint is not a thing that "happens".
@@ -194,7 +204,7 @@ export default function Site() {
 
       {webgl && staged ? (
         <Suspense fallback={null}>
-          <CarStage progress={progress} invalidateRef={invalidate} />
+          <CarStage progress={lap} invalidateRef={invalidate} />
         </Suspense>
       ) : null}
 

@@ -76,6 +76,35 @@
  * The two plan views stay dead centre on purpose: overhead is a diagram, and a
  * diagram is centred.
  */
+/**
+ * The page the lap was cut against, in document order.
+ *
+ * These are the section boundaries the inline `// ===` comments in `LAP` name
+ * (the table in the header above predates Articles being removed and is
+ * superseded). A section is its top; a car window (`lap` = its `data-lap`) is
+ * the gap's start and end. `lib/lapClock.js` pins these to wherever the same
+ * elements actually sit on a phone, so the lap keeps landing in the gaps.
+ *
+ * Articles no longer exists, so Contact inherits its range. Skills is
+ * `#sponsors`. Reordering sections in Site means updating this, exactly as it
+ * already means retuning `at`.
+ */
+export const PAGE_AT = [
+  { id: 'home', at: 0 },
+  { lap: 'plan', at: [0.050, 0.099] },
+  { id: 'about', at: 0.099 },
+  { id: 'education', at: 0.171 },
+  { lap: 'aero', at: [0.223, 0.273] },
+  { id: 'record', at: 0.273 },
+  { id: 'paddock', at: 0.365 },
+  { lap: 'chassis', at: [0.483, 0.532] },
+  { id: 'projects', at: 0.532 },
+  { id: 'research', at: 0.690 },
+  { lap: 'drive', at: [0.752, 0.802] },
+  { id: 'sponsors', at: 0.802 },
+  { id: 'contact', at: 0.912 },
+];
+
 export const LAP = [
   // ============================ HOME 0.000-0.050 =======================
   // Short section. Low wide, front three-quarter, the car looming.

@@ -17,7 +17,7 @@ import styles from './CarWindow.module.css';
  * All that is left is a diagonal shaft on the shared rake. Decorative, so the
  * section is `aria-hidden` and carries no label.
  */
-export default function CarWindow({ height = 'tall', align = 'left' }) {
+export default function CarWindow({ id, height = 'tall', align = 'left' }) {
   const reveal = useReveal({ threshold: 0.25 });
 
   return (
@@ -25,6 +25,9 @@ export default function CarWindow({ height = 'tall', align = 'left' }) {
       className={`${styles.window} ${styles[height]} ${styles[align]}`}
       ref={reveal}
       data-reveal
+      // The lap's anchor on phones (lib/lapClock.js). A data attribute, not an
+      // id: an empty gap should not become a scroll or :target destination.
+      data-lap={id}
       aria-hidden="true"
     >
       {/* Nothing but the shaft. The ghosted word that used to sit here was

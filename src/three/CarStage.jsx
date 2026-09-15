@@ -6,6 +6,7 @@ import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment
 import { CARS, DEFAULT_CAR } from './cars';
 import { LAP, SEQUENCE, sampleLap, sampleSwap } from './circuit';
 import { getDock, onDock } from './dock';
+import { isNarrow } from '../lib/narrow';
 import styles from './CarStage.module.css';
 
 // Every model is normalised to this length on load, so one camera path covers
@@ -17,6 +18,10 @@ const CAR_LENGTH = 4.3;
 // the sphere enclosing a 4.3 m long, 1.1 m tall car has a radius of 2.5 m, so
 // it reserves more than a metre of empty margin above and below the bodywork.
 const HALF = [0.95, 0.6, 2.15];
+
+// How far a portrait frame opens the lap's close shots toward a full fit:
+// 0.40 becomes 0.61, 0.84 becomes 0.90, 1.0 is untouched. See the Rig.
+const PORTRAIT_OPEN = 0.35;
 
 /**
  * Distance at which the car exactly fills the frame from a given direction.
@@ -348,7 +353,12 @@ function Rig({
     // lap's own distance factor (tight in corners, open on straights), then
     // however far the section has pushed the car back.
     const base = fitDistance(dir, worldUp, vFov, aspect, rollEff) * 1.08;
-    const distance = (base * s.dist) / Math.max(0.06, d.scale);
+    // A portrait frame is short across, so the lap's close detail crops
+    // (dist 0.40-0.50) lose the car entirely — a wheel, a stripe. Opened
+    // toward a full fit proportionally rather than floored, so the drift's
+    // dolly still pushes in and pulls out, just from further back.
+    const lensDist = aspect < 1 ? s.dist + (1 - s.dist) * PORTRAIT_OPEN : s.dist;
+    const distance = (base * lensDist) / Math.max(0.06, d.scale);
 
     // Docking slides the AIM POINT sideways in screen space rather than moving
     // the car in world space — the car keeps its place on the circuit and only
@@ -484,7 +494,7 @@ function Lights({ tunnelRef }) {
  * contact shadow so the tyres are planted, and painted lines to give the eye
  * something to measure the motion against.
  */
-function Ground() {
+function Ground({ narrow = false }) {
   // One texture, tiled for the lines, and a second single-shot texture used as
   // an alpha mask. A plane with a hard edge reads as a grey stripe across the
   // frame the moment the camera drops near the deck; fading it to nothing
@@ -545,7 +555,9 @@ function Ground() {
         scale={11}
         blur={2.4}
         far={3}
-        resolution={512}
+        // Half on a phone. The shadow still re-renders every frame the car
+        // turns, and this is the one pass whose cost is pure resolution.
+        resolution={narrow ? 256 : 512}
         color="#000000"
       />
     </group>
@@ -570,15 +582,19 @@ export default function CarStage({ progress, invalidateRef }) {
   const fadeIn = useRef(1);
   const fadeOut = useRef(0);
   const tunnel = useRef(0);
+  // Phones get a lighter render: lower resolution, a cheaper shadow and one
+  // car of lead instead of two. Read once — the canvas is not rebuilt if a
+  // tablet rotates across the breakpoint.
+  const [narrow] = useState(isNarrow);
 
   const onCar = (next, upcoming) => {
     setActive(next);
 
-    // Two cars of lead, not one — see preloadAhead.
+    // Two cars of lead on desktop, one on a phone — see preloadAhead.
     if (upcoming && CARS[upcoming] && !loaded.current.includes(upcoming)) {
       loaded.current.push(upcoming);
     }
-    preloadAhead(next);
+    preloadAhead(next, narrow ? 1 : 2);
 
     // Drop anything two swaps behind. All five resident at once is 10.8 MB and
     // roughly 700k triangles, which is more than this needs to hold.
@@ -597,7 +613,9 @@ export default function CarStage({ progress, invalidateRef }) {
         // On demand: the Rig re-invalidates while the camera is settling, so
         // frames are drawn during scroll and not while the page sits still.
         frameloop="demand"
-        dpr={[1, 2]}
+        // Phones report a DPR of 3; a full-screen canvas at 2x on top of the
+        // models is enough GPU memory for iOS Safari to kill the tab.
+        dpr={narrow ? [1, 1.5] : [1, 2]}
         camera={{ position: [0, 12, 0.2], fov: 16, near: 0.1, far: 90 }}
         gl={{
           antialias: true,
@@ -621,7 +639,7 @@ export default function CarStage({ progress, invalidateRef }) {
         />
         <Gloss />
         <Lights tunnelRef={tunnel} />
-        <Ground />
+        <Ground narrow={narrow} />
         {/* Both cars are on stage only across a handover. The outgoing one is
             listed first so it draws before the incoming car during the
             dissolve. Separate Suspense boundaries: if the incoming model is
@@ -665,11 +683,11 @@ export default function CarStage({ progress, invalidateRef }) {
  * jump for a fraction of the bytes, and the work is spread across the lap
  * instead of landing in one burst.
  */
-function preloadAhead(from) {
+function preloadAhead(from, ahead = 2) {
   const order = SEQUENCE;
   const i = order.indexOf(from);
   if (i < 0) return;
-  order.slice(i + 1, i + 3).forEach((k) => {
+  order.slice(i + 1, i + 1 + ahead).forEach((k) => {
     if (CARS[k]) useGLTF.preload(CARS[k].url);
   });
 }

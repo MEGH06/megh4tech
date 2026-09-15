@@ -171,6 +171,20 @@
   --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Phones. Section titles are wide (118%) and uppercase, so the 38px floor ran
+   ACHIEVEMENTS off the edge of a 390px screen, and the desktop spacing scale
+   left most of a phone's scroll as empty padding. */
+@media (max-width: 600px) {
+  :root {
+    --t-lg: clamp(1.75rem, 8vw, 2.375rem);
+    --w-display: 108;
+    --s-gutter: 20px;
+    --s-8: 3rem;
+    --s-9: 4rem;
+    --s-10: 5rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   :root {
     --dur: 0.01ms;

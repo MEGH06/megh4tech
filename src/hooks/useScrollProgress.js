@@ -35,22 +35,28 @@ import { useEffect, useRef } from 'react';
  * and only recomputed on resize — and on the first few scrolls, because lazy
  * images and the 3D chunk change the document height after mount.
  */
-export default function useScrollProgress(onChange) {
+export default function useScrollProgress(onChange, onMeasure) {
   const progress = useRef(0);
   const cb = useRef(onChange);
+  const measured = useRef(onMeasure);
 
   // Assigned in an effect, not during render — writing a ref while rendering is
   // a tearing hazard under concurrent rendering.
   useEffect(() => {
     cb.current = onChange;
-  }, [onChange]);
+    measured.current = onMeasure;
+  }, [onChange, onMeasure]);
 
   useEffect(() => {
     let span = 0;
     let settled = 0;
 
+    // `onMeasure` hears about every height change this hook already watches
+    // for, before the `onChange` that follows it — so anything laid out
+    // against the page (the lap's section anchors) is never a scroll stale.
     const remeasure = () => {
       span = document.documentElement.scrollHeight - window.innerHeight;
+      measured.current?.();
     };
 
     const update = () => {

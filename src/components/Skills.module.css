@@ -140,6 +140,11 @@
     gap: 0.35em 0.85em;
   }
 
+  /* A long name on one unbreakable line is wider than a phone. */
+  .marks li {
+    white-space: normal;
+  }
+
   .groupLabel {
     gap: var(--s-3);
     letter-spacing: 0.22em;

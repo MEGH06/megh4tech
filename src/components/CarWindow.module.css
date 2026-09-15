@@ -49,9 +49,8 @@
 .right .shaft { left: 26%; }
 
 @media (max-width: 760px) {
-  /* Shorter gaps on a phone: a full viewport of empty space between every
-     section is a long scroll when each section is already taller. */
-  .tall { min-height: 92svh; }
-  .short { min-height: 78svh; }
-
+  /* Full height on a phone too. A shorter gap never shows the car full-frame
+     — the sections either side cover the rest of the screen — and the lap's
+     big moves are timed to a window that owns the viewport. */
+  .short { min-height: 88svh; }
 }

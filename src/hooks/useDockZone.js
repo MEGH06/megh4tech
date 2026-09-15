@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef } from 'react';
 import { claimDock, releaseDock } from '../three/dock';
+import { isNarrow } from '../lib/narrow';
 
 /**
  * Marks a section as claiming a dock while it is on screen.
@@ -29,15 +30,19 @@ export default function useDockZone({ x = 0.6, y = 0, scale = 0.42 } = {}) {
     const node = ref.current;
     if (!node) return undefined;
 
-    // On a phone there is no room to sit beside anything. The car is parked
-    // small in a corner for the whole page instead of tracking each section.
-    const narrow = window.matchMedia('(max-width: 900px)').matches;
+    // On a phone there is no room to sit beside anything, so every section
+    // docks the way a full-width desktop section does: centred, full size.
+    // The car used to be parked small in a corner for the whole page, which
+    // meant it never had a full-frame moment even in the gaps. Now only
+    // `hold` changes — it dims the car behind the text and slows the lap,
+    // and falls to zero as a car window takes the screen.
+    const narrow = isNarrow();
 
     const spec = {
       node,
-      x: narrow ? 0.62 : x,
-      y: narrow ? 0.52 : y,
-      scale: narrow ? 0.3 : scale,
+      x: narrow ? 0 : x,
+      y: narrow ? 0 : y,
+      scale: narrow ? 1 : scale,
     };
 
     const io = new IntersectionObserver(

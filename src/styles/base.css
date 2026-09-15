@@ -473,16 +473,48 @@ section {
 }
 
 /* No room to sit beside anything on a phone. The column goes full width and
-   the car parks small in a corner for the whole page instead. */
+   the car parks small in a corner for the whole page instead.
+
+   `[data-side] .col` has to be named here, not just `.col`. The desktop rule
+   that narrows the column is (0,2,0) and a bare `.col` cannot beat it, so on a
+   phone every side column kept its 38-54% width minus 64px of padding — About
+   measured 71px wide, one word to a line, and the longest words pushed the
+   page to 535px so the browser zoomed the whole site out. */
 @media (max-width: 900px) {
-  .col {
+  html,
+  body {
+    /* clip, not hidden. iOS still pans a hidden body sideways, and hidden on
+       html would make body its own scroller and break window scroll. */
+    overflow-x: clip;
+  }
+
+  .col,
+  [data-side] .col {
     width: 100%;
     margin-left: 0;
     margin-right: 0;
+    padding-inline: 0;
+    padding-block: var(--s-6);
   }
 
   [data-side] {
-    padding-inline: var(--s-4);
+    padding-inline: var(--s-5);
+  }
+
+  /* There is no lane beside the text on a phone — the car passes behind every
+     section — so the backing is an even plate to the screen edges instead of
+     a fade toward one side, and it no longer bleeds 100% past the viewport. */
+  .col::before,
+  [data-side='left'] .col::before,
+  [data-side='right'] .col::before {
+    left: calc(var(--s-5) * -1);
+    right: calc(var(--s-5) * -1);
+    background: rgba(5, 5, 5, 0.9);
+  }
+
+  h1,
+  h2 {
+    overflow-wrap: break-word;
   }
 }
 

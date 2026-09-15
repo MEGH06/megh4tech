@@ -43,6 +43,11 @@
      dark texture rather than a video, which is why it looked like nothing was
      playing. Enough desaturation that red still leads, enough light to see. */
   filter: grayscale(0.55) contrast(1.15) brightness(0.82);
+  /* hero-loop.mp4 has letterbox bars baked into the frame — about 75px of
+     black at the top and bottom of 720. Under object-fit alone they drew a
+     hard horizontal line across the hero. 1.32 pushes up to 87px of each bar
+     outside the backdrop, which clips it. */
+  transform: scale(1.32);
 }
 
 .scrim {
@@ -106,20 +111,25 @@
   }
 
 /* A soft pool of dark under the corner only, so the name holds its contrast
-   without the whole lower half of the frame going opaque. */
+   without the whole lower half of the frame going opaque.
+
+   closest-side, centred in its box, so it is fully transparent at every edge.
+   The old ellipse sat at 12% 92% and was still ~90% opaque where the box
+   ended — at the page gutter and at the section's bottom — which drew a hard
+   dark rectangle around the name against the lighter ground. */
 .content::before {
   content: '';
   position: absolute;
-  left: 0;
-  right: 40%;
+  left: -20%;
+  right: 30%;
   bottom: 0;
-  top: -40%;
+  top: -50%;
   z-index: -1;
   background: radial-gradient(
-    ellipse 90% 80% at 12% 92%,
+    closest-side,
     rgba(5, 5, 5, 0.92) 0%,
-    rgba(5, 5, 5, 0.6) 42%,
-    transparent 76%
+    rgba(5, 5, 5, 0.6) 50%,
+    transparent 100%
   );
   pointer-events: none;
 }

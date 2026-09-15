@@ -252,9 +252,13 @@
     padding-block: var(--s-8);
   }
 
+  /* One column. This was `46px 1fr` — the position-marker track the desktop
+     layout already removed — so every card without a picture put its whole
+     body into a 46px column. */
   .rows > li {
-    grid-template-columns: 46px 1fr;
+    grid-template-columns: 1fr;
     gap: var(--s-3);
+    padding: var(--s-4);
   }
 }
 
