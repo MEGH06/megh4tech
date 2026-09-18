@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { DRIVER, DRIVER_ROLES } from '../data/driver';
 import { asset } from '../lib/assets';
 import styles from './GridSlot.module.css';
@@ -6,6 +7,11 @@ import styles from './GridSlot.module.css';
 // static file instead of going through the bundle graph. 2.8 MB, re-encoded
 // from the 36.8 MB original.
 const HERO_VIDEO = asset('/hero-loop.mp4');
+// The first frame, as a still. Shown until the video decodes, and it is the
+// whole landing on a phone that refuses to play one — iOS blocks autoplay
+// outright in Low Power Mode, and a black rectangle there reads as a broken
+// page rather than as a video that did not start.
+const HERO_POSTER = asset('/hero-poster.jpg');
 
 /**
  * The landing.
@@ -15,6 +21,36 @@ const HERO_VIDEO = asset('/hero-loop.mp4');
  * content. Name, three disciplines, then the season figures counting up.
  */
 export default function GridSlot() {
+  const video = useRef(null);
+
+  // iOS reads the muted ATTRIBUTE when it decides whether a video may
+  // autoplay, and React writes only the property — so Safari saw a video it
+  // considered unmuted and refused to start it. Set on the element itself,
+  // then ask for playback and ask again on the first touch, which is a user
+  // gesture and lifts the block where one is still in force.
+  useEffect(() => {
+    const el = video.current;
+    if (!el) return undefined;
+
+    el.muted = true;
+    el.defaultMuted = true;
+    el.setAttribute('muted', '');
+
+    const start = () => {
+      const p = el.play();
+      if (p && p.catch) p.catch(() => { /* blocked; the poster stands in */ });
+    };
+
+    start();
+    window.addEventListener('touchstart', start, { passive: true, once: true });
+    document.addEventListener('visibilitychange', start);
+
+    return () => {
+      window.removeEventListener('touchstart', start);
+      document.removeEventListener('visibilitychange', start);
+    };
+  }, []);
+
   return (
     <section className={styles.section} id="home">
       {/* Video and scrim masked together as one unit. Separately they each end
@@ -23,11 +59,14 @@ export default function GridSlot() {
       <div className={styles.backdrop} aria-hidden="true">
         <video
           className={styles.video}
+          ref={video}
+          poster={HERO_POSTER}
           autoPlay
           loop
           muted
           playsInline
           preload="auto"
+          disableRemotePlayback
         >
           <source src={HERO_VIDEO} type="video/mp4" />
         </video>

@@ -30,30 +30,15 @@ html {
      lazy screenshots, so resizes above the fold are routine; keeping anchoring
      would mean navigation that works only sometimes. */
   overflow-anchor: none;
+
+  /* The ground colour lives here rather than on the body, so the light below
+     can sit under everything the body contains without the body's own
+     background painting over it. */
+  background-color: var(--c-black);
 }
 
 body {
-  /* Painted on the body itself rather than a pseudo-element or an extra
-     layer: no stacking to reason about against the fixed canvas, and the
-     colour underneath stays explicit so nothing shows through if the
-     gradients fail to paint. `fixed` attachment keeps the light still while
-     the page scrolls past it, which is what makes it read as a room rather
-     than as a texture printed on the document. */
-  background-color: var(--c-black);
-  background-image:
-    radial-gradient(
-      130% 95% at 76% 12%,
-      rgba(255, 255, 255, var(--glow)) 0%,
-      rgba(255, 255, 255, calc(var(--glow) * 0.35)) 34%,
-      transparent 66%
-    ),
-    radial-gradient(
-      95% 75% at 14% 86%,
-      rgba(200, 16, 46, calc(var(--glow) * 0.5)) 0%,
-      transparent 58%
-    );
-  background-attachment: fixed;
-  background-repeat: no-repeat;
+  background-color: transparent;
   color: var(--c-white);
   font-family: var(--f-body);
   font-size: var(--t-base);
@@ -69,6 +54,37 @@ body {
   /* Every digit that sits in a column lines up, everywhere, without anyone
      having to remember to ask for it. */
   font-variant-numeric: tabular-nums;
+}
+
+/* The light in the room.
+ *
+ * A fixed pseudo-element, not `background-attachment: fixed` on the body.
+ * iOS Safari does not honour fixed attachment: it falls back to scrolling the
+ * image, which sizes this gradient to the whole 18,000px document instead of
+ * to the screen — so on a phone the light was smeared away to nothing and the
+ * page read flat and dead next to the same page on a laptop.
+ *
+ * Under everything: z-index -1 puts it above the root background and below
+ * every positioned layer, including the car canvas at z-index 0. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(
+      130% 95% at 76% 12%,
+      rgba(255, 255, 255, var(--glow)) 0%,
+      rgba(255, 255, 255, calc(var(--glow) * 0.35)) 34%,
+      transparent 66%
+    ),
+    radial-gradient(
+      95% 75% at 14% 86%,
+      rgba(200, 16, 46, calc(var(--glow) * 0.5)) 0%,
+      transparent 58%
+    );
+  background-repeat: no-repeat;
 }
 
 h1,
