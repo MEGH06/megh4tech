@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { DRIVER, DRIVER_ROLES } from '../data/driver';
 import { asset } from '../lib/assets';
 import styles from './GridSlot.module.css';
@@ -22,6 +22,9 @@ const HERO_POSTER = asset('/hero-poster.jpg');
  */
 export default function GridSlot() {
   const video = useRef(null);
+  // Whether the video is genuinely running. Until it is, the element stays
+  // transparent and the still frame below it is the landing.
+  const [playing, setPlaying] = useState(false);
 
   // iOS reads the muted ATTRIBUTE when it decides whether a video may
   // autoplay, and React writes only the property — so Safari saw a video it
@@ -36,16 +39,30 @@ export default function GridSlot() {
     el.defaultMuted = true;
     el.setAttribute('muted', '');
 
+    // Resolves when playback actually begins; rejects when the browser
+    // refuses. The `playing` event below covers a start we did not ask for.
     const start = () => {
       const p = el.play();
-      if (p && p.catch) p.catch(() => { /* blocked; the poster stands in */ });
+      if (p && p.then) {
+        p.then(() => setPlaying(true)).catch(() => { /* the poster stands in */ });
+      }
     };
 
+    const on = () => setPlaying(true);
+    const off = () => setPlaying(false);
+    el.addEventListener('playing', on);
+    el.addEventListener('pause', off);
+    el.addEventListener('stalled', off);
     start();
-    window.addEventListener('touchstart', start, { passive: true, once: true });
+    // Not `once`: in Low Power Mode the first touch can be refused too, and a
+    // listener that has already spent itself never gets a second chance.
+    window.addEventListener('touchstart', start, { passive: true });
     document.addEventListener('visibilitychange', start);
 
     return () => {
+      el.removeEventListener('playing', on);
+      el.removeEventListener('pause', off);
+      el.removeEventListener('stalled', off);
       window.removeEventListener('touchstart', start);
       document.removeEventListener('visibilitychange', start);
     };
@@ -57,10 +74,11 @@ export default function GridSlot() {
           at the section edge with their own hard line; the whole backdrop has
           to dissolve, or the landing reads as a block sitting on the page. */}
       <div className={styles.backdrop} aria-hidden="true">
+        {/* Under the video, and the whole landing wherever it cannot play. */}
+        <img className={styles.poster} src={HERO_POSTER} alt="" decoding="async" />
         <video
-          className={styles.video}
+          className={`${styles.video} ${playing ? styles.videoOn : ''}`}
           ref={video}
-          poster={HERO_POSTER}
           autoPlay
           loop
           muted

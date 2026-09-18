@@ -32,6 +32,14 @@
   mask-image: linear-gradient(to bottom, #000 0, #000 52%, transparent 100%);
 }
 
+/* The still, as its own layer under the video.
+ *
+ * Not the video's own `poster`, because a paused video on iOS wears Safari's
+ * grey play badge and nothing can style it away — and in Low Power Mode, where
+ * autoplay is refused outright, that badge is the first thing on the page.
+ * The video fades in over this once it is genuinely playing, so a phone that
+ * will not play it shows a still frame and no chrome at all. */
+.poster,
 .video {
   position: absolute;
   inset: 0;
@@ -48,6 +56,22 @@
      hard horizontal line across the hero. 1.32 pushes up to 87px of each bar
      outside the backdrop, which clips it. */
   transform: scale(1.32);
+}
+
+/* Hidden until the video is actually running — which also hides the badge. */
+.video {
+  opacity: 0;
+  transition: opacity 600ms var(--ease-soft);
+}
+
+.videoOn {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .video {
+    transition: none;
+  }
 }
 
 .scrim {
