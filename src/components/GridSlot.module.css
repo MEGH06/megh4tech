@@ -58,6 +58,17 @@
   transform: scale(1.32);
 }
 
+/* The animated fallback, over the still and under the video. It fades in so
+   the swap does not land as a cut, and it is only in the DOM at all once
+   playback has been refused. */
+.loop {
+  animation: loopIn 500ms var(--ease-soft) both;
+}
+
+@keyframes loopIn {
+  from { opacity: 0; }
+}
+
 /* Hidden until the video is actually running — which also hides the badge. */
 .video {
   opacity: 0;

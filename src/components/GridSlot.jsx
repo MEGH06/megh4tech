@@ -12,6 +12,12 @@ const HERO_VIDEO = asset('/hero-loop.mp4');
 // outright in Low Power Mode, and a black rectangle there reads as a broken
 // page rather than as a video that did not start.
 const HERO_POSTER = asset('/hero-poster.jpg');
+// The same footage as an animated image, for phones that will not play video.
+// iOS refuses autoplay outright in Low Power Mode — which is a mode most
+// people leave on — but it has no such rule for an animated image, so the
+// landing still moves. 380 kB, and fetched only once playback is refused, so
+// a phone that plays the video never pays for it.
+const HERO_LOOP = asset('/hero-loop.webp');
 
 /**
  * The landing.
@@ -25,6 +31,9 @@ export default function GridSlot() {
   // Whether the video is genuinely running. Until it is, the element stays
   // transparent and the still frame below it is the landing.
   const [playing, setPlaying] = useState(false);
+  // Set when the browser refuses to play at all, which is the cue to fetch
+  // the animated fallback rather than leave a still photograph.
+  const [refused, setRefused] = useState(false);
 
   // iOS reads the muted ATTRIBUTE when it decides whether a video may
   // autoplay, and React writes only the property — so Safari saw a video it
@@ -44,7 +53,7 @@ export default function GridSlot() {
     const start = () => {
       const p = el.play();
       if (p && p.then) {
-        p.then(() => setPlaying(true)).catch(() => { /* the poster stands in */ });
+        p.then(() => setPlaying(true)).catch(() => setRefused(true));
       }
     };
 
@@ -76,6 +85,14 @@ export default function GridSlot() {
       <div className={styles.backdrop} aria-hidden="true">
         {/* Under the video, and the whole landing wherever it cannot play. */}
         <img className={styles.poster} src={HERO_POSTER} alt="" decoding="async" />
+        {refused ? (
+          <img
+            className={`${styles.poster} ${styles.loop}`}
+            src={HERO_LOOP}
+            alt=""
+            decoding="async"
+          />
+        ) : null}
         <video
           className={`${styles.video} ${playing ? styles.videoOn : ''}`}
           ref={video}
